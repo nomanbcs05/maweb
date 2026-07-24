@@ -60,7 +60,7 @@ export const HeroSlider: React.FC<HeroSliderProps> = () => {
 
   return (
     <section
-      className="relative w-full min-h-[280px] h-[45vh] sm:min-h-[340px] sm:h-[52vh] md:h-[60vh] lg:h-[68vh] xl:h-[75vh] max-h-[900px] overflow-hidden bg-[#05070c]"
+      className="relative w-full h-[38vh] min-h-[250px] sm:h-[48vh] sm:min-h-[320px] md:h-[58vh] lg:h-[68vh] xl:h-[75vh] max-h-[850px] overflow-hidden bg-[#05070c]"
       onMouseEnter={() => setAutoplay(false)}
       onMouseLeave={() => setAutoplay(true)}
     >
@@ -76,7 +76,7 @@ export const HeroSlider: React.FC<HeroSliderProps> = () => {
             <img
               src={slide.image}
               alt="M.A BAKERS Hero"
-              className="h-full w-full object-cover object-center select-none"
+              className="h-full w-full object-cover object-center select-none max-w-full"
               draggable={false}
               decoding="async"
               fetchPriority={index === 0 ? 'high' : 'auto'}
@@ -93,28 +93,28 @@ export const HeroSlider: React.FC<HeroSliderProps> = () => {
       {/* Navigation arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-0 top-1/2 z-30 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-r-full border border-l-0 border-[#C9A227]/40 bg-black/35 text-white backdrop-blur-md transition-all duration-300 hover:bg-[#C9A227]/25 sm:h-9 sm:w-9"
+        className="absolute left-2 sm:left-4 top-1/2 z-30 flex h-8 w-8 sm:h-10 sm:w-10 -translate-y-1/2 items-center justify-center rounded-full border border-[#C9A227]/40 bg-black/40 text-white backdrop-blur-md transition-all duration-300 hover:bg-[#C9A227]/30 hover:scale-105 active:scale-95"
         aria-label="Previous slide"
       >
-        <ChevronLeft size={18} strokeWidth={2} />
+        <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2} />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-0 top-1/2 z-30 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-l-full border border-r-0 border-[#C9A227]/40 bg-black/35 text-white backdrop-blur-md transition-all duration-300 hover:bg-[#C9A227]/25 sm:h-9 sm:w-9"
+        className="absolute right-2 sm:right-4 top-1/2 z-30 flex h-8 w-8 sm:h-10 sm:w-10 -translate-y-1/2 items-center justify-center rounded-full border border-[#C9A227]/40 bg-black/40 text-white backdrop-blur-md transition-all duration-300 hover:bg-[#C9A227]/30 hover:scale-105 active:scale-95"
         aria-label="Next slide"
       >
-        <ChevronRight size={18} strokeWidth={2} />
+        <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2} />
       </button>
 
       {/* Dot indicators */}
-      <div className="absolute bottom-0 left-1/2 z-30 flex -translate-x-1/2 items-center gap-1.5 rounded-t-full border border-b-0 border-[#C9A227]/30 bg-black/30 px-3 py-1 backdrop-blur-md sm:gap-2 sm:px-3.5 sm:py-1.5">
+      <div className="absolute bottom-3 sm:bottom-4 left-1/2 z-30 flex -translate-x-1/2 items-center gap-1.5 rounded-full border border-[#C9A227]/30 bg-black/40 px-3 py-1 backdrop-blur-md sm:gap-2 sm:px-3.5 sm:py-1.5">
         {SLIDES.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
             className={`rounded-full transition-all duration-500 ${
               index === currentSlide
-                ? 'h-1.5 w-6 bg-gradient-to-r from-[#C9A227] to-[#e6c86e] shadow-[0_0_8px_rgba(201,162,39,0.5)] sm:h-2 sm:w-7'
+                ? 'h-1.5 w-5 bg-gradient-to-r from-[#C9A227] to-[#e6c86e] shadow-[0_0_8px_rgba(201,162,39,0.5)] sm:h-2 sm:w-7'
                 : 'h-1.5 w-1.5 bg-white/40 hover:bg-white/70 sm:h-2 sm:w-2'
             }`}
             aria-label={`Go to slide ${index + 1}`}

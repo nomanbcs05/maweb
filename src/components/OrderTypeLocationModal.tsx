@@ -106,11 +106,11 @@ export const OrderTypeLocationModal: React.FC<OrderTypeLocationModalProps> = ({
       <div className="w-full max-w-[480px] rounded-3xl overflow-hidden shadow-2xl bg-white flex flex-col max-h-[90vh]">
         <div className="p-6 text-center flex-1 overflow-y-auto">
           {/* Logo */}
-          <div className="mb-4 flex justify-center">
+          <div className="mb-3 flex justify-center">
             <img 
               src="/images/ma-bakers-logo.png" 
               alt="M.A Bakers" 
-              className="h-40 w-auto object-contain"
+              className="h-24 sm:h-32 w-auto object-contain"
             />
           </div>
 
