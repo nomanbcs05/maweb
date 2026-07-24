@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track Your Order — M.A Bakers</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF7F2; --card: #FFFFFF; --text: #111110; --muted: #7A746B; --gold: #C99A3E; --border: #E7E2D8;
+    --green: #2D9A52;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; }
+  header { padding: 24px 40px; border-bottom: 1px solid var(--border); background: var(--card); display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--text); text-decoration: none; }
+  .back-btn { font-size: 13px; font-weight: 600; text-decoration: none; color: var(--muted); }
+  
+  main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+  .track-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; width: 100%; max-width: 500px; padding: 40px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); }
+  .track-card h1 { font-family: 'Fraunces', serif; font-size: 28px; margin-bottom: 8px; text-align: center; }
+  .track-card > p { color: var(--muted); font-size: 14px; text-align: center; margin-bottom: 32px; }
+  
+  .form-group { display: flex; gap: 8px; margin-bottom: 32px; }
+  .form-group input { flex: 1; padding: 14px 16px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; outline: none; }
+  .form-group input:focus { border-color: var(--text); }
+  .btn { background: var(--text); color: #fff; border: none; padding: 0 24px; border-radius: 6px; font-weight: 600; font-size: 13px; cursor: pointer; }
+  .btn:hover { background: var(--gold); }
+  
+  /* Timeline */
+  .timeline { display: none; padding-top: 16px; border-top: 1px solid var(--border); }
+  .timeline.show { display: block; }
+  .tl-head { display: flex; justify-content: space-between; margin-bottom: 24px; }
+  .tl-head b { font-size: 15px; }
+  .tl-head span { font-size: 13px; color: var(--gold); font-weight: 600; background: rgba(201,154,62,0.1); padding: 4px 10px; border-radius: 100px; }
+  
+  .tl-steps { display: flex; flex-direction: column; gap: 0; position: relative; }
+  .tl-steps::before { content: ''; position: absolute; left: 15px; top: 10px; bottom: 30px; width: 2px; background: var(--border); z-index: 1; }
+  
+  .tl-step { display: flex; gap: 20px; padding-bottom: 30px; position: relative; z-index: 2; opacity: 0.4; }
+  .tl-step.done, .tl-step.active { opacity: 1; }
+  
+  .tl-icon { width: 32px; height: 32px; border-radius: 50%; background: var(--card); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .tl-icon svg { width: 14px; height: 14px; stroke: var(--text); fill: none; stroke-width: 2; }
+  .tl-step.done .tl-icon { background: var(--green); border-color: var(--green); }
+  .tl-step.done .tl-icon svg { stroke: #fff; }
+  .tl-step.active .tl-icon { border-color: var(--gold); background: var(--gold); }
+  .tl-step.active .tl-icon svg { stroke: #fff; }
+  
+  .tl-content { padding-top: 6px; }
+  .tl-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .tl-desc { font-size: 12.5px; color: var(--muted); }
+  
+  .err-msg { color: #EF4444; font-size: 13px; text-align: center; margin-top: -16px; margin-bottom: 24px; display: none; }
+  
+  /* Multiple orders selection list */
+  .orders-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+  .order-card {
+    border: 1px solid var(--border); border-radius: 8px; padding: 16px;
+    background: var(--card); cursor: pointer; transition: 0.2s; display: flex;
+    justify-content: space-between; align-items: center; text-decoration: none;
+  }
+  .order-card:hover { border-color: var(--gold); transform: translateY(-1px); }
+  .order-card-info { display: flex; flex-direction: column; gap: 4px; text-align: left; }
+  .order-card b { font-size: 14px; color: var(--text); }
+  .order-card span { font-size: 11.5px; color: var(--muted); }
+  .order-card .status-pill {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 4px 10px; border-radius: 100px;
+  }
+  .status-pill.pending { color: var(--gold); background: rgba(201,154,62,0.1); }
+  .status-pill.delivered { color: var(--green); background: rgba(45,154,82,0.1); }
+  .status-pill.cancelled { color: var(--red-soft); background: rgba(232,84,74,0.1); }
+  .status-pill.preparing, .status-pill.baking, .status-pill.out { color: #3B82F6; background: rgba(59,130,246,0.1); }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">M.A Bakers</a>
+  <a href="index.html" class="back-btn">Return to Store</a>
+</header>
+
+<main>
+  <div class="track-card">
+    <h1>Track Your Order</h1>
+    <p>Enter your order number or registered phone number to see real-time updates.</p>
+    
+    <div class="form-group">
+      <input type="text" id="orderIdInput" placeholder="e.g. MAB-123456 or 03XXXXXXXXX">
+      <button class="btn" onclick="trackOrder()">Track</button>
+    </div>
+    
+    <div class="err-msg" id="errMsg">Order not found. Please check your order ID.</div>
+    
+    <div id="ordersList" class="orders-list"></div>
+    
+    <div class="timeline" id="timeline">
+      <div class="tl-head">
+        <b>Order <span style="background:none;padding:0;color:inherit" id="tlOrderId">#</span></b>
+        <span id="tlStatusTag">Preparing</span>
+      </div>
+      
+      <div class="tl-steps">
+        <div class="tl-step" id="ts-Pending">
+          <div class="tl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="tl-content"><div class="tl-title">Order Received</div><div class="tl-desc">We've received your order and payment.</div></div>
+        </div>
+        
+        <div class="tl-step" id="ts-Preparing">
+          <div class="tl-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="tl-content"><div class="tl-title">Preparing</div><div class="tl-desc">Our bakers are reviewing your order.</div></div>
+        </div>
+        
+        <div class="tl-step" id="ts-Baking">
+          <div class="tl-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+          <div class="tl-content"><div class="tl-title">Baking</div><div class="tl-desc">Fresh in the oven! Smells delicious.</div></div>
+        </div>
+        
+        <div class="tl-step" id="ts-Out">
+          <div class="tl-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+          <div class="tl-content"><div class="tl-title">Out for Delivery</div><div class="tl-desc" id="outDesc">Your order is on the way to you.</div></div>
+        </div>
+        
+        <div class="tl-step" id="ts-Delivered" style="padding-bottom:0">
+          <div class="tl-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="tl-content"><div class="tl-title">Delivered</div><div class="tl-desc">Enjoy your freshly baked goods!</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script type="module" src="/js/api.js"></script>
+<script type="module" src="/js/track.js"></script>
+</body>
+</html>

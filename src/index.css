@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #FAF7F2;
+  --color-card: #FFFFFF;
+  --color-text-main: #111110;
+  --color-text-muted: #7A746B;
+  --color-gold: #C99A3E;
+  --color-accent: #C9A227;
+  --color-primary: #071326;
+  --color-border-light: #E7E2D8;
+  --font-family-fraunces: 'Fraunces', serif;
+  --font-family-inter: 'Inter', sans-serif;
+  --font-family-playfair: 'Playfair Display', serif;
+  --font-family-poppins: 'Poppins', sans-serif;
+}
+
+@layer base {
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text-main);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #E7E2D8; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #C99A3E; }
+
+/* Scrollbar none utility */
+.scrollbar-none::-webkit-scrollbar { display: none; }
+.scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Font family utility classes (Tailwind v4 doesn't auto-generate these) */
+.font-family-fraunces { font-family: 'Fraunces', serif; }
+.font-family-inter { font-family: 'Inter', sans-serif; }
+.font-family-playfair { font-family: 'Playfair Display', serif; }
+.font-family-poppins { font-family: 'Poppins', sans-serif; }
+
+/* Animate fade in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-fade-in { animation: fadeIn 0.2s ease-out forwards; }
+
+/* Spin animation for loaders */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Premium animations for hero */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float { animation: float 6s ease-in-out infinite; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.animate-fade-in-left { animation: fadeInLeft 0.8s ease-out forwards; }
+
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-zoom-in { animation: zoomIn 0.8s ease-out forwards; }
