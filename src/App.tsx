@@ -43,7 +43,7 @@ function App() {
   const [confirmedOrder, setConfirmedOrder] = useState<Order | null>(null);
   const [customizingProduct, setCustomizingProduct] = useState<Product | null>(null);
   const [isOrderTypeModalOpen, setIsOrderTypeModalOpen] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState<string>('');
+  const [, setSelectedLocation] = useState<string>('');
 
   useEffect(() => {
     fetchData();

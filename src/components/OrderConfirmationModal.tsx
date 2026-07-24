@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check, X, MessageCircle, FileText, Home } from 'lucide-react';
+import { Check, MessageCircle, FileText, Home } from 'lucide-react';
 import type { Order } from '../types';
 
 interface OrderConfirmationModalProps {
