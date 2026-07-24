@@ -7,7 +7,7 @@ const staticProducts: Product[] = [
   { id: 'cake1', name: 'Black Forest Cake', slug: 'black-forest-cake', category: 'Cakes', description: 'Classic black forest cake with cherries and chocolate layers.', price: 600, unit: 'Pound', quantityOptions: [
     { label: '1LB', value: '1lb', price: 600 },
     { label: '2LB', value: '2lb', price: 1100 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 10, minimum_order: 1, preparation_time: '1 hour', tags: ['Chocolate', 'Cherry'], ingredients: ['Flour', 'Sugar', 'Cocoa Powder', 'Butter', 'Eggs', 'Cream', 'Cherries'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  ], image: '/images/products/cakes/black-forest-cake.png', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 10, minimum_order: 1, preparation_time: '1 hour', tags: ['Chocolate', 'Cherry'], ingredients: ['Flour', 'Sugar', 'Cocoa Powder', 'Butter', 'Eggs', 'Cream', 'Cherries'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   { id: 'cake2', name: 'Pineapple Ice Cake', slug: 'pineapple-ice-cake', category: 'Cakes', description: 'Refreshing pineapple ice cake with fresh pineapple.', price: 550, unit: 'Pound', quantityOptions: [
     { label: '1LB', value: '1lb', price: 550 },
     { label: '2LB', value: '2lb', price: 1000 }
@@ -16,34 +16,34 @@ const staticProducts: Product[] = [
     { label: '250g', value: '250g', price: 300 },
     { label: '500g', value: '500g', price: 550 },
     { label: '1kg', value: '1kg', price: 1000 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 12, minimum_order: 1, preparation_time: '1 hour', tags: ['Dry Fruit', 'Nuts'], ingredients: ['Flour', 'Sugar', 'Butter', 'Dry Fruits', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs', 'Nuts'] },
+  ], image: '/images/products/cakes/dry-fruit-cake.png', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 12, minimum_order: 1, preparation_time: '1 hour', tags: ['Dry Fruit', 'Nuts'], ingredients: ['Flour', 'Sugar', 'Butter', 'Dry Fruits', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs', 'Nuts'] },
   { id: 'cake4', name: 'Three Milk Cake', slug: 'three-milk-cake', category: 'Cakes', description: 'Moist three milk (tres leches) cake.', price: 1300, unit: 'Kg', quantityOptions: [
     { label: '250g', value: '250g', price: 400 },
     { label: '500g', value: '500g', price: 700 },
     { label: '1kg', value: '1kg', price: 1300 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: false, best_seller: true, new_arrival: true, available: true, stock_quantity: 10, minimum_order: 1, preparation_time: '1 hour', tags: ['Three Milk', 'Tres Leches'], ingredients: ['Flour', 'Sugar', 'Butter', 'Milk', 'Cream', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  ], image: '/images/products/cakes/three-milk-cake.png', gallery: [], featured: false, best_seller: true, new_arrival: true, available: true, stock_quantity: 10, minimum_order: 1, preparation_time: '1 hour', tags: ['Three Milk', 'Tres Leches'], ingredients: ['Flour', 'Sugar', 'Butter', 'Milk', 'Cream', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   { id: 'cake5', name: 'Bombay Chocolate', slug: 'bombay-chocolate', category: 'Cakes', description: 'Rich Bombay chocolate cake.', price: 800, unit: 'Pound', quantityOptions: [
     { label: '1LB', value: '1lb', price: 800 },
     { label: '2LB', value: '2lb', price: 1500 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: true, best_seller: false, new_arrival: false, available: true, stock_quantity: 15, minimum_order: 1, preparation_time: '1 hour', tags: ['Chocolate', 'Bombay'], ingredients: ['Flour', 'Sugar', 'Cocoa Powder', 'Butter', 'Eggs', 'Cream'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  ], image: '/images/products/cakes/bombay-chocolate.png', gallery: [], featured: true, best_seller: false, new_arrival: false, available: true, stock_quantity: 15, minimum_order: 1, preparation_time: '1 hour', tags: ['Chocolate', 'Bombay'], ingredients: ['Flour', 'Sugar', 'Cocoa Powder', 'Butter', 'Eggs', 'Cream'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   { id: 'cake6', name: 'Bombay Coffee', slug: 'bombay-coffee', category: 'Cakes', description: 'Delicious Bombay coffee flavored cake.', price: 800, unit: 'Pound', quantityOptions: [
     { label: '1LB', value: '1lb', price: 800 },
     { label: '2LB', value: '2lb', price: 1500 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: false, best_seller: true, new_arrival: true, available: true, stock_quantity: 12, minimum_order: 1, preparation_time: '1 hour', tags: ['Coffee', 'Bombay'], ingredients: ['Flour', 'Sugar', 'Coffee', 'Butter', 'Eggs', 'Cream'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  ], image: '/images/products/cakes/bombay-coffee.png', gallery: [], featured: false, best_seller: true, new_arrival: true, available: true, stock_quantity: 12, minimum_order: 1, preparation_time: '1 hour', tags: ['Coffee', 'Bombay'], ingredients: ['Flour', 'Sugar', 'Coffee', 'Butter', 'Eggs', 'Cream'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   { id: 'cake7', name: 'Brownie Cake', slug: 'brownie-cake', category: 'Cakes', description: 'Fudgy brownie cake with chocolate frosting.', price: 700, unit: 'Pound', quantityOptions: [
     { label: '1LB', value: '1lb', price: 700 },
     { label: '2LB', value: '2lb', price: 1300 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: true, best_seller: false, new_arrival: false, available: true, stock_quantity: 10, minimum_order: 1, preparation_time: '1 hour', tags: ['Brownie', 'Chocolate'], ingredients: ['Flour', 'Sugar', 'Cocoa Powder', 'Butter', 'Eggs', 'Chocolate'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  ], image: '/images/products/cakes/brownie-cake.png', gallery: [], featured: true, best_seller: false, new_arrival: false, available: true, stock_quantity: 10, minimum_order: 1, preparation_time: '1 hour', tags: ['Brownie', 'Chocolate'], ingredients: ['Flour', 'Sugar', 'Cocoa Powder', 'Butter', 'Eggs', 'Chocolate'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   // Pastries
   { id: 'pastry1', name: 'Bombay Chocolate Pastry', slug: 'bombay-chocolate-pastry', category: 'Pastries', description: 'Delicious Bombay chocolate pastry.', price: 100, unit: 'Piece', quantityOptions: [
     { label: '1 PC', value: '1pc', price: 100 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 30, minimum_order: 1, preparation_time: '30 mins', tags: ['Pastry', 'Chocolate', 'Bombay'], ingredients: ['Flour', 'Sugar', 'Butter', 'Chocolate', 'Cream', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  ], image: '/images/products/pastries/bombay-chocolate-pastry.png', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 30, minimum_order: 1, preparation_time: '30 mins', tags: ['Pastry', 'Chocolate', 'Bombay'], ingredients: ['Flour', 'Sugar', 'Butter', 'Chocolate', 'Cream', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   { id: 'pastry2', name: 'Bombay Coffee Pastry', slug: 'bombay-coffee-pastry', category: 'Pastries', description: 'Rich Bombay coffee pastry.', price: 100, unit: 'Piece', quantityOptions: [
     { label: '1 PC', value: '1pc', price: 100 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: true, best_seller: false, new_arrival: true, available: true, stock_quantity: 30, minimum_order: 1, preparation_time: '30 mins', tags: ['Pastry', 'Coffee', 'Bombay'], ingredients: ['Flour', 'Sugar', 'Butter', 'Coffee', 'Cream', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  ], image: '/images/products/pastries/bombay-coffee-pastry.png', gallery: [], featured: true, best_seller: false, new_arrival: true, available: true, stock_quantity: 30, minimum_order: 1, preparation_time: '30 mins', tags: ['Pastry', 'Coffee', 'Bombay'], ingredients: ['Flour', 'Sugar', 'Butter', 'Coffee', 'Cream', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   { id: 'pastry3', name: 'Sundae Small', slug: 'sundae-small', category: 'Pastries', description: 'Small sundae pastry.', price: 100, unit: 'Piece', quantityOptions: [
     { label: '1 PC', value: '1pc', price: 100 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: false, best_seller: true, new_arrival: false, available: true, stock_quantity: 25, minimum_order: 1, preparation_time: '30 mins', tags: ['Pastry', 'Sundae'], ingredients: ['Flour', 'Sugar', 'Butter', 'Cream', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  ], image: '/images/products/pastries/sundae-small.png', gallery: [], featured: false, best_seller: true, new_arrival: false, available: true, stock_quantity: 25, minimum_order: 1, preparation_time: '30 mins', tags: ['Pastry', 'Sundae'], ingredients: ['Flour', 'Sugar', 'Butter', 'Cream', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   { id: 'pastry4', name: 'Red Velvet Pastry', slug: 'red-velvet-pastry', category: 'Pastries', description: 'Light and fluffy red velvet pastry.', price: 100, unit: 'Piece', quantityOptions: [
     { label: '1 PC', value: '1pc', price: 100 }
   ], image: '/images/products/pastries/red-velvet-pastry.png', gallery: [], featured: true, best_seller: false, new_arrival: true, available: true, stock_quantity: 30, minimum_order: 1, preparation_time: '30 mins', tags: ['Pastry', 'Red Velvet'], ingredients: ['Flour', 'Sugar', 'Butter', 'Cream Cheese', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
@@ -59,7 +59,7 @@ const staticProducts: Product[] = [
   // Cupcakes & Breads
   { id: 'bread1', name: 'Cupcakes', slug: 'cupcakes', category: 'Breads', description: 'Delicious cupcakes.', price: 50, unit: 'Piece', quantityOptions: [
     { label: '1 PC', value: '1pc', price: 50 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: true, best_seller: true, new_arrival: true, available: true, stock_quantity: 40, minimum_order: 1, preparation_time: '30 mins', tags: ['Cupcakes', 'Sweet'], ingredients: ['Flour', 'Sugar', 'Butter', 'Eggs', 'Cream'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  ], image: '/images/products/breads/cupcakes.png', gallery: [], featured: true, best_seller: true, new_arrival: true, available: true, stock_quantity: 40, minimum_order: 1, preparation_time: '30 mins', tags: ['Cupcakes', 'Sweet'], ingredients: ['Flour', 'Sugar', 'Butter', 'Eggs', 'Cream'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   { id: 'bread2', name: 'Pkharya Bread', slug: 'pkharya-bread', category: 'Breads', description: 'Fresh pkharya bread.', price: 100, unit: 'Piece', quantityOptions: [
     { label: '1 PC', value: '1pc', price: 100 }
   ], image: 'https://coresg-normal.trae.ai/api/v1/text-to-image?prompt=pkharya%20bread%20professional%20food%20photography&image_size=square_hd', gallery: [], featured: true, best_seller: false, new_arrival: false, available: true, stock_quantity: 20, minimum_order: 1, preparation_time: '40 mins', tags: ['Bread', 'Pkharya'], ingredients: ['Flour', 'Water', 'Salt', 'Yeast'], allergens: ['Gluten'] },
@@ -68,7 +68,7 @@ const staticProducts: Product[] = [
   ], image: 'https://coresg-normal.trae.ai/api/v1/text-to-image?prompt=btera%20bread%20professional%20food%20photography&image_size=square_hd', gallery: [], featured: false, best_seller: true, new_arrival: true, available: true, stock_quantity: 20, minimum_order: 1, preparation_time: '40 mins', tags: ['Bread', 'Btera'], ingredients: ['Flour', 'Water', 'Salt', 'Yeast'], allergens: ['Gluten'] },
   { id: 'bread4', name: 'Burger Buns', slug: 'burger-buns', category: 'Breads', description: 'Fresh burger buns.', price: 25, unit: 'Piece', quantityOptions: [
     { label: '1 PC', value: '1pc', price: 25 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 50, minimum_order: 1, preparation_time: '30 mins', tags: ['Burger Buns', 'Bread'], ingredients: ['Flour', 'Water', 'Salt', 'Yeast', 'Sugar', 'Butter'], allergens: ['Gluten', 'Dairy'] },
+  ], image: '/images/products/breads/burger-buns.png', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 50, minimum_order: 1, preparation_time: '30 mins', tags: ['Burger Buns', 'Bread'], ingredients: ['Flour', 'Water', 'Salt', 'Yeast', 'Sugar', 'Butter'], allergens: ['Gluten', 'Dairy'] },
   // Cookies (Tea Time Munchies)
   { id: 'cookie1', name: 'Khaasry', slug: 'khaasry', category: 'Cookies', description: 'Delicious khaasry.', price: 600, unit: 'Kg', quantityOptions: [
     { label: '250g', value: '250g', price: 180 },
@@ -107,10 +107,10 @@ const staticProducts: Product[] = [
   // Frozen Items (Snacks)
   { id: 'frozen1', name: 'Plain Paratha', slug: 'plain-paratha', category: 'Frozen Items', description: 'Frozen plain paratha - 8 pcs.', price: 180, unit: 'Pack', quantityOptions: [
     { label: '1 Pack', value: '1pack', price: 180 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 40, minimum_order: 1, preparation_time: 'N/A', tags: ['Frozen', 'Paratha', 'Plain'], ingredients: ['Flour', 'Water', 'Salt', 'Ghee'], allergens: ['Gluten', 'Dairy'] },
+  ], image: '/images/products/frozen-items/plain-paratha.png', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 40, minimum_order: 1, preparation_time: 'N/A', tags: ['Frozen', 'Paratha', 'Plain'], ingredients: ['Flour', 'Water', 'Salt', 'Ghee'], allergens: ['Gluten', 'Dairy'] },
   { id: 'frozen2', name: 'Plain Paratha (30 pcs)', slug: 'plain-paratha-30', category: 'Frozen Items', description: 'Frozen plain paratha - 30 pcs.', price: 650, unit: 'Pack', quantityOptions: [
     { label: '1 Pack', value: '1pack', price: 650 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: false, best_seller: false, new_arrival: true, available: true, stock_quantity: 25, minimum_order: 1, preparation_time: 'N/A', tags: ['Frozen', 'Paratha', 'Family Pack'], ingredients: ['Flour', 'Water', 'Salt', 'Ghee'], allergens: ['Gluten', 'Dairy'] },
+  ], image: '/images/products/frozen-items/plain-paratha-30.png', gallery: [], featured: false, best_seller: false, new_arrival: true, available: true, stock_quantity: 25, minimum_order: 1, preparation_time: 'N/A', tags: ['Frozen', 'Paratha', 'Family Pack'], ingredients: ['Flour', 'Water', 'Salt', 'Ghee'], allergens: ['Gluten', 'Dairy'] },
   { id: 'frozen3', name: 'Molai Boti Samosa', slug: 'molai-boti-samosa', category: 'Frozen Items', description: 'Frozen molai boti samosa - 12 pcs.', price: 500, unit: 'Pack', quantityOptions: [
     { label: '1 Pack', value: '1pack', price: 500 }
   ], image: '/images/products/frozen-items/molai-boti-samosa.png', gallery: [], featured: true, best_seller: true, new_arrival: true, available: false, stock_quantity: 30, minimum_order: 1, preparation_time: 'N/A', tags: ['Frozen', 'Samosa', 'Molai Boti'], ingredients: ['Flour', 'Chicken', 'Spices', 'Ghee'], allergens: ['Gluten', 'Dairy'] },
