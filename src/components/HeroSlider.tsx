@@ -4,27 +4,27 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const SLIDES = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80&auto=format&fit=crop',
+    image: '/images/hero/hero-cake.png',
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=1400&q=80&auto=format&fit=crop',
+    image: '/images/hero/hero-3-milk.png',
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=1400&q=80&auto=format&fit=crop',
+    image: '/images/hero/hero-pastry.png',
   },
   {
     id: 4,
-    image: 'https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=1400&q=80&auto=format&fit=crop',
+    image: '/images/hero/hero-dessert.png',
   },
   {
     id: 5,
-    image: 'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=1400&q=80&auto=format&fit=crop',
+    image: '/images/hero/hero-paratha.png',
   },
   {
     id: 6,
-    image: 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=1400&q=80&auto=format&fit=crop',
+    image: '/images/hero/hero-paratha-51pcs.png',
   },
 ] as const;
 

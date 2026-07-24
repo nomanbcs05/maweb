@@ -11,7 +11,7 @@ const staticProducts: Product[] = [
   { id: 'cake2', name: 'Pineapple Ice Cake', slug: 'pineapple-ice-cake', category: 'Cakes', description: 'Refreshing pineapple ice cake with fresh pineapple.', price: 550, unit: 'Pound', quantityOptions: [
     { label: '1LB', value: '1lb', price: 550 },
     { label: '2LB', value: '2lb', price: 1000 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: false, best_seller: false, new_arrival: true, available: true, stock_quantity: 8, minimum_order: 1, preparation_time: '1 hour', tags: ['Pineapple', 'Ice Cake'], ingredients: ['Flour', 'Sugar', 'Butter', 'Pineapple', 'Cream', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  ], image: '/images/products/cakes/pineapple-ice-cake.png', gallery: [], featured: false, best_seller: false, new_arrival: true, available: true, stock_quantity: 8, minimum_order: 1, preparation_time: '1 hour', tags: ['Pineapple', 'Ice Cake'], ingredients: ['Flour', 'Sugar', 'Butter', 'Pineapple', 'Cream', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   { id: 'cake3', name: 'Dry Fruit Cake', slug: 'dry-fruit-cake', category: 'Cakes', description: 'Rich dry fruit cake with assorted nuts and fruits.', price: 1000, unit: 'Kg', quantityOptions: [
     { label: '250g', value: '250g', price: 300 },
     { label: '500g', value: '500g', price: 550 },
@@ -40,7 +40,7 @@ const staticProducts: Product[] = [
   ], image: '/images/products/pastries/bombay-chocolate-pastry.png', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 30, minimum_order: 1, preparation_time: '30 mins', tags: ['Pastry', 'Chocolate', 'Bombay'], ingredients: ['Flour', 'Sugar', 'Butter', 'Chocolate', 'Cream', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   { id: 'pastry2', name: 'Bombay Coffee Pastry', slug: 'bombay-coffee-pastry', category: 'Pastries', description: 'Rich Bombay coffee pastry.', price: 100, unit: 'Piece', quantityOptions: [
     { label: '1 PC', value: '1pc', price: 100 }
-  ], image: '/images/products/pastries/bombay-coffee-pastry.png', gallery: [], featured: true, best_seller: false, new_arrival: true, available: true, stock_quantity: 30, minimum_order: 1, preparation_time: '30 mins', tags: ['Pastry', 'Coffee', 'Bombay'], ingredients: ['Flour', 'Sugar', 'Butter', 'Coffee', 'Cream', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  ], image: '/images/products/pastries/Bombay_Cake_1254x1254.png', gallery: [], featured: true, best_seller: false, new_arrival: true, available: true, stock_quantity: 30, minimum_order: 1, preparation_time: '30 mins', tags: ['Pastry', 'Coffee', 'Bombay'], ingredients: ['Flour', 'Sugar', 'Butter', 'Coffee', 'Cream', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   { id: 'pastry3', name: 'Sundae Small', slug: 'sundae-small', category: 'Pastries', description: 'Small sundae pastry.', price: 100, unit: 'Piece', quantityOptions: [
     { label: '1 PC', value: '1pc', price: 100 }
   ], image: '/images/products/pastries/sundae-small.png', gallery: [], featured: false, best_seller: true, new_arrival: false, available: true, stock_quantity: 25, minimum_order: 1, preparation_time: '30 mins', tags: ['Pastry', 'Sundae'], ingredients: ['Flour', 'Sugar', 'Butter', 'Cream', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
@@ -74,36 +74,36 @@ const staticProducts: Product[] = [
     { label: '250g', value: '250g', price: 180 },
     { label: '500g', value: '500g', price: 350 },
     { label: '1kg', value: '1kg', price: 600 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 20, minimum_order: 1, preparation_time: '20 mins', tags: ['Khaasry', 'Tea Time', 'Cookies'], ingredients: ['Flour', 'Sugar', 'Butter', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  ], image: '/images/products/cookies/khaasry.png', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 20, minimum_order: 1, preparation_time: '20 mins', tags: ['Khaasry', 'Tea Time', 'Cookies'], ingredients: ['Flour', 'Sugar', 'Butter', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   { id: 'cookie2', name: 'Biscuits', slug: 'biscuits', category: 'Cookies', description: 'Classic biscuits.', price: 700, unit: 'Kg', quantityOptions: [
     { label: '250g', value: '250g', price: 200 },
     { label: '500g', value: '500g', price: 400 },
     { label: '1kg', value: '1kg', price: 700 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: false, best_seller: false, new_arrival: true, available: true, stock_quantity: 25, minimum_order: 1, preparation_time: '20 mins', tags: ['Biscuits', 'Tea Time'], ingredients: ['Flour', 'Sugar', 'Butter', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  ], image: '/images/products/cookies/biscuits.png', gallery: [], featured: false, best_seller: false, new_arrival: true, available: true, stock_quantity: 25, minimum_order: 1, preparation_time: '20 mins', tags: ['Biscuits', 'Tea Time'], ingredients: ['Flour', 'Sugar', 'Butter', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   { id: 'cookie3', name: 'Sugar Free Biscuits', slug: 'sugar-free-biscuits', category: 'Cookies', description: 'Sugar free biscuits.', price: 1200, unit: 'Kg', quantityOptions: [
     { label: '250g', value: '250g', price: 350 },
     { label: '500g', value: '500g', price: 650 },
     { label: '1kg', value: '1kg', price: 1200 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: true, best_seller: true, new_arrival: true, available: true, stock_quantity: 15, minimum_order: 1, preparation_time: '20 mins', tags: ['Sugar Free', 'Biscuits', 'Tea Time'], ingredients: ['Flour', 'Sugar Free Sweetener', 'Butter', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  ], image: '/images/products/cookies/sugar-free-biscuits.png', gallery: [], featured: true, best_seller: true, new_arrival: true, available: true, stock_quantity: 15, minimum_order: 1, preparation_time: '20 mins', tags: ['Sugar Free', 'Biscuits', 'Tea Time'], ingredients: ['Flour', 'Sugar Free Sweetener', 'Butter', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   { id: 'cookie4', name: 'Rusks', slug: 'rusks', category: 'Cookies', description: 'Crunchy rusks.', price: 550, unit: 'Kg', quantityOptions: [
     { label: '250g', value: '250g', price: 160 },
     { label: '500g', value: '500g', price: 300 },
     { label: '1kg', value: '1kg', price: 550 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: false, best_seller: true, new_arrival: false, available: true, stock_quantity: 30, minimum_order: 1, preparation_time: '25 mins', tags: ['Rusks', 'Tea Time'], ingredients: ['Flour', 'Sugar', 'Butter', 'Eggs', 'Milk'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  ], image: '/images/products/cookies/rusks.png', gallery: [], featured: false, best_seller: true, new_arrival: false, available: true, stock_quantity: 30, minimum_order: 1, preparation_time: '25 mins', tags: ['Rusks', 'Tea Time'], ingredients: ['Flour', 'Sugar', 'Butter', 'Eggs', 'Milk'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   { id: 'cookie5', name: 'Slice Cake', slug: 'slice-cake', category: 'Cookies', description: 'Tea time slice cake.', price: 150, unit: 'Piece', quantityOptions: [
     { label: '1 PC', value: '1pc', price: 150 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: true, best_seller: false, new_arrival: true, available: true, stock_quantity: 25, minimum_order: 1, preparation_time: '30 mins', tags: ['Slice Cake', 'Tea Time'], ingredients: ['Flour', 'Sugar', 'Butter', 'Eggs', 'Milk'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  ], image: '/images/products/cookies/slice-cake.png', gallery: [], featured: true, best_seller: false, new_arrival: true, available: true, stock_quantity: 25, minimum_order: 1, preparation_time: '30 mins', tags: ['Slice Cake', 'Tea Time'], ingredients: ['Flour', 'Sugar', 'Butter', 'Eggs', 'Milk'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   { id: 'cookie6', name: 'Vegetable Patties', slug: 'vegetable-patties', category: 'Cookies', description: 'Vegetable patties.', price: 40, unit: 'Piece', quantityOptions: [
     { label: '1 PC', value: '1pc', price: 40 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: false, best_seller: true, new_arrival: false, available: true, stock_quantity: 40, minimum_order: 1, preparation_time: '25 mins', tags: ['Patties', 'Vegetable', 'Tea Time'], ingredients: ['Flour', 'Butter', 'Vegetables', 'Spices'], allergens: ['Gluten', 'Dairy'] },
+  ], image: '/images/products/cookies/vegetable-patties.png', gallery: [], featured: false, best_seller: true, new_arrival: false, available: true, stock_quantity: 40, minimum_order: 1, preparation_time: '25 mins', tags: ['Patties', 'Vegetable', 'Tea Time'], ingredients: ['Flour', 'Butter', 'Vegetables', 'Spices'], allergens: ['Gluten', 'Dairy'] },
   { id: 'cookie7', name: 'Chicken Patties', slug: 'chicken-patties', category: 'Cookies', description: 'Chicken patties.', price: 50, unit: 'Piece', quantityOptions: [
     { label: '1 PC', value: '1pc', price: 50 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: true, best_seller: true, new_arrival: true, available: true, stock_quantity: 35, minimum_order: 1, preparation_time: '25 mins', tags: ['Patties', 'Chicken', 'Tea Time'], ingredients: ['Flour', 'Butter', 'Chicken', 'Spices'], allergens: ['Gluten', 'Dairy'] },
+  ], image: '/images/products/cookies/chicken-patties.png', gallery: [], featured: true, best_seller: true, new_arrival: true, available: true, stock_quantity: 35, minimum_order: 1, preparation_time: '25 mins', tags: ['Patties', 'Chicken', 'Tea Time'], ingredients: ['Flour', 'Butter', 'Chicken', 'Spices'], allergens: ['Gluten', 'Dairy'] },
   { id: 'cookie8', name: 'Rusk Cake', slug: 'rusk-cake', category: 'Cookies', description: 'Rusk cake.', price: 1200, unit: 'Kg', quantityOptions: [
     { label: '250g', value: '250g', price: 350 },
     { label: '500g', value: '500g', price: 650 },
     { label: '1kg', value: '1kg', price: 1200 }
-  ], image: '/placeholder_images/generic_placeholder.jpg', gallery: [], featured: false, best_seller: false, new_arrival: false, available: true, stock_quantity: 15, minimum_order: 1, preparation_time: '30 mins', tags: ['Rusk Cake', 'Tea Time'], ingredients: ['Flour', 'Sugar', 'Butter', 'Eggs', 'Milk'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  ], image: '/images/products/cookies/rusk-cake.png', gallery: [], featured: false, best_seller: false, new_arrival: false, available: true, stock_quantity: 15, minimum_order: 1, preparation_time: '30 mins', tags: ['Rusk Cake', 'Tea Time'], ingredients: ['Flour', 'Sugar', 'Butter', 'Eggs', 'Milk'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   // Frozen Items (Snacks)
   { id: 'frozen1', name: 'Plain Paratha', slug: 'plain-paratha', category: 'Frozen Items', description: 'Frozen plain paratha - 8 pcs.', price: 180, unit: 'Pack', quantityOptions: [
     { label: '1 Pack', value: '1pack', price: 180 }
