@@ -292,17 +292,17 @@ function App() {
         }> = {
           'Cakes': {
             description: 'Indulge in our handcrafted cakes, baked fresh daily with premium ingredients. From rich chocolate cakes to light fruit gateaux, every slice tells a story of passion and perfection.',
-            image: '/images/cakes-section.png',
+            image: 'https://images.unsplash.com/photo-1505250469679-6c5e6a47f5ca?w=1400&q=80&auto=format&fit=crop',
             subtitle: 'Celebrate Every Moment'
           },
           'Pastries': {
             description: 'Experience buttery, flaky perfection with our artisan pastries. Each piece is crafted with love, using traditional techniques passed down through generations.',
-            image: '/images/Pastries.jpg',
+            image: 'https://images.unsplash.com/photo-1528744598421-b7c8b79ca0f4?w=1400&q=80&auto=format&fit=crop',
             subtitle: 'Buttery & Delicate'
           },
           'Breads': {
             description: 'Discover the art of slow fermentation with our artisan breads. From crusty sourdough to soft dinner rolls, each loaf is a testament to timeless baking.',
-            image: '/images/products/breads/burger-buns.png',
+            image: '/placeholder_images/generic_placeholder.jpg',
             subtitle: 'Slow-Fermented Perfection'
           },
           'Cookies': {
