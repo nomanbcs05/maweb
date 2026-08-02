@@ -35,24 +35,24 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
 
         {/* Corner ornaments */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute left-0 top-0 h-16 w-16 border-l border-t border-[#C9A227]/25" />
-          <div className="absolute right-0 top-0 h-16 w-16 border-r border-t border-[#C9A227]/25" />
+          <div className="absolute left-0 top-0 h-12 w-12 border-l border-t border-[#C9A227]/25" />
+          <div className="absolute right-0 top-0 h-12 w-12 border-r border-t border-[#C9A227]/25" />
         </div>
 
         <div className="relative mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10">
-          <div className="flex h-[72px] items-center justify-between sm:h-[84px] lg:h-[96px]">
+          <div className="flex h-[52px] items-center justify-between sm:h-[60px] lg:h-[68px]">
             {/* Left */}
             <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-4">
               <button
                 type="button"
                 onClick={() => setSidebarOpen(true)}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white backdrop-blur-md transition-all duration-300 hover:border-[#C9A227]/40 hover:bg-[#C9A227]/10 hover:text-[#C9A227]"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white backdrop-blur-md transition-all duration-300 hover:border-[#C9A227]/40 hover:bg-[#C9A227]/10 hover:text-[#C9A227]"
                 aria-label="Open menu"
               >
-                <Menu size={18} strokeWidth={1.5} />
+                <Menu size={16} strokeWidth={1.5} />
               </button>
 
-              <div className="hidden h-6 w-px bg-white/15 sm:block" />
+              <div className="hidden h-5 w-px bg-white/15 sm:block" />
 
               <a
                 href="https://wa.me/923093660360"
@@ -60,12 +60,12 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
                 rel="noopener noreferrer"
                 className="group hidden items-center gap-2.5 text-white transition-colors sm:flex"
               >
-                <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] transition-colors group-hover:border-[#C9A227]/40 group-hover:bg-[#C9A227]/10">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="transition-colors group-hover:text-[#C9A227]">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] transition-colors group-hover:border-[#C9A227]/40 group-hover:bg-[#C9A227]/10">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="transition-colors group-hover:text-[#C9A227]">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                   </svg>
                 </span>
-                <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/90 transition-colors group-hover:text-[#C9A227]">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/90 transition-colors group-hover:text-[#C9A227]">
                   Call Us
                 </span>
               </a>
@@ -80,7 +80,7 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
               <img
                 src="/images/ma-bakers-white-logo.png"
                 alt="M.A BAKERS"
-                className="h-14 w-auto object-contain drop-shadow-[0_4px_24px_rgba(201,162,39,0.25)] sm:h-16 md:h-[72px] lg:h-20 filter invert brightness-200"
+                className="h-8 sm:h-10 md:h-12 lg:h-14 w-auto object-contain drop-shadow-[0_2px_12px_rgba(201,162,39,0.25)] filter invert brightness-200"
               />
             </button>
 

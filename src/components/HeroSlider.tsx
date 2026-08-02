@@ -60,7 +60,8 @@ export const HeroSlider: React.FC<HeroSliderProps> = () => {
 
   return (
     <section
-      className="relative w-full aspect-[16/9] sm:aspect-auto h-auto sm:h-[48vh] sm:min-h-[320px] md:h-[58vh] lg:h-[68vh] xl:h-[75vh] max-h-[850px] overflow-hidden bg-[#05070c]"
+      className="relative w-full overflow-hidden bg-[#05070c]"
+      style={{ aspectRatio: '16/9' }}
       onMouseEnter={() => setAutoplay(false)}
       onMouseLeave={() => setAutoplay(true)}
     >
@@ -73,18 +74,10 @@ export const HeroSlider: React.FC<HeroSliderProps> = () => {
               index === currentSlide ? 'opacity-100 z-[1]' : 'opacity-0 z-0 pointer-events-none'
             }`}
           >
-            {/* Ambient background blur layer for mobile fit */}
-            <img
-              src={slide.image}
-              alt=""
-              aria-hidden="true"
-              className="absolute inset-0 h-full w-full object-cover opacity-40 blur-xl scale-110 md:hidden select-none"
-            />
-            {/* Main hero image - object-contain on mobile to prevent cropping, object-cover on desktop */}
             <img
               src={slide.image}
               alt="M.A BAKERS Hero"
-              className="relative h-full w-full object-contain md:object-cover object-center select-none max-w-full"
+              className="h-full w-full object-cover object-top md:object-center select-none max-w-full block"
               draggable={false}
               decoding="async"
               fetchPriority={index === 0 ? 'high' : 'auto'}

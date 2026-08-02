@@ -60,12 +60,9 @@ const staticProducts: Product[] = [
   { id: 'bread1', name: 'Cupcakes', slug: 'cupcakes', category: 'Breads', description: 'Delicious cupcakes.', price: 50, unit: 'Piece', quantityOptions: [
     { label: '1 PC', value: '1pc', price: 50 }
   ], image: '/images/products/breads/cupcakes.png', gallery: [], featured: true, best_seller: true, new_arrival: true, available: true, stock_quantity: 40, minimum_order: 1, preparation_time: '30 mins', tags: ['Cupcakes', 'Sweet'], ingredients: ['Flour', 'Sugar', 'Butter', 'Eggs', 'Cream'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
-  { id: 'bread2', name: 'Pkharya Bread', slug: 'pkharya-bread', category: 'Breads', description: 'Fresh pkharya bread.', price: 100, unit: 'Piece', quantityOptions: [
+  { id: 'bread3', name: 'Peta Bread', slug: 'peta-bread', category: 'Breads', description: 'Fresh peta bread.', price: 100, unit: 'Piece', quantityOptions: [
     { label: '1 PC', value: '1pc', price: 100 }
-  ], image: 'https://coresg-normal.trae.ai/api/v1/text-to-image?prompt=pkharya%20bread%20professional%20food%20photography&image_size=square_hd', gallery: [], featured: true, best_seller: false, new_arrival: false, available: true, stock_quantity: 20, minimum_order: 1, preparation_time: '40 mins', tags: ['Bread', 'Pkharya'], ingredients: ['Flour', 'Water', 'Salt', 'Yeast'], allergens: ['Gluten'] },
-  { id: 'bread3', name: 'Btera Bread', slug: 'btera-bread', category: 'Breads', description: 'Fresh btera bread.', price: 100, unit: 'Piece', quantityOptions: [
-    { label: '1 PC', value: '1pc', price: 100 }
-  ], image: 'https://coresg-normal.trae.ai/api/v1/text-to-image?prompt=btera%20bread%20professional%20food%20photography&image_size=square_hd', gallery: [], featured: false, best_seller: true, new_arrival: true, available: true, stock_quantity: 20, minimum_order: 1, preparation_time: '40 mins', tags: ['Bread', 'Btera'], ingredients: ['Flour', 'Water', 'Salt', 'Yeast'], allergens: ['Gluten'] },
+  ], image: 'https://coresg-normal.trae.ai/api/v1/text-to-image?prompt=peta%20bread%20professional%20food%20photography&image_size=square_hd', gallery: [], featured: false, best_seller: true, new_arrival: true, available: true, stock_quantity: 20, minimum_order: 1, preparation_time: '40 mins', tags: ['Bread', 'Peta'], ingredients: ['Flour', 'Water', 'Salt', 'Yeast'], allergens: ['Gluten'] },
   { id: 'bread4', name: 'Burger Buns', slug: 'burger-buns', category: 'Breads', description: 'Fresh burger buns.', price: 25, unit: 'Piece', quantityOptions: [
     { label: '1 PC', value: '1pc', price: 25 }
   ], image: '/images/products/breads/burger-buns.png', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 50, minimum_order: 1, preparation_time: '30 mins', tags: ['Burger Buns', 'Bread'], ingredients: ['Flour', 'Water', 'Salt', 'Yeast', 'Sugar', 'Butter'], allergens: ['Gluten', 'Dairy'] },
