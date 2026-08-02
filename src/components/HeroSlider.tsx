@@ -4,11 +4,11 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const SLIDES = [
   {
     id: 1,
-    image: '/images/hero/hero-cake.png',
+    image: '/images/hero/hero-3-milk.png?v=2',
   },
   {
     id: 2,
-    image: '/images/hero/hero-3-milk.png',
+    image: '/images/hero/hero-cake.png',
   },
   {
     id: 3,
