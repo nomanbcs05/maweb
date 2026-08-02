@@ -29,9 +29,9 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
 
   return (
     <>
-      <header className="relative z-50 w-full bg-white/80 backdrop-blur-md border-b border-[#071326]/10 text-[#071326] shadow-sm">
+      <header className="relative z-50 w-full bg-[#05070c]">
         {/* Gold accent line */}
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-[#C9A227]/50 to-transparent" />
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-[#C9A227]/70 to-transparent" />
 
         {/* Corner ornaments */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -46,26 +46,26 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
               <button
                 type="button"
                 onClick={() => setSidebarOpen(true)}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#071326]/15 bg-[#071326]/5 text-[#071326] backdrop-blur-md transition-all duration-300 hover:border-[#C9A227] hover:bg-[#C9A227]/10 hover:text-[#C9A227]"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white backdrop-blur-md transition-all duration-300 hover:border-[#C9A227]/40 hover:bg-[#C9A227]/10 hover:text-[#C9A227]"
                 aria-label="Open menu"
               >
                 <Menu size={18} strokeWidth={1.5} />
               </button>
 
-              <div className="hidden h-6 w-px bg-[#071326]/15 sm:block" />
+              <div className="hidden h-6 w-px bg-white/15 sm:block" />
 
               <a
                 href="https://wa.me/923093660360"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group hidden items-center gap-2.5 text-[#071326] transition-colors sm:flex"
+                className="group hidden items-center gap-2.5 text-white transition-colors sm:flex"
               >
-                <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#071326]/15 bg-[#071326]/5 transition-colors group-hover:border-[#C9A227] group-hover:bg-[#C9A227]/10">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] transition-colors group-hover:border-[#C9A227]/40 group-hover:bg-[#C9A227]/10">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="transition-colors group-hover:text-[#C9A227]">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                   </svg>
                 </span>
-                <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#071326]/90 transition-colors group-hover:text-[#C9A227]">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/90 transition-colors group-hover:text-[#C9A227]">
                   Call Us
                 </span>
               </a>
@@ -78,9 +78,9 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 shrink-0 transition-transform duration-300 hover:scale-[1.02]"
             >
               <img
-                src="/images/ma-bakers-logo.png"
+                src="/images/ma-bakers-white-logo.png"
                 alt="M.A BAKERS"
-                className="h-12 w-auto object-contain drop-shadow-sm sm:h-14 md:h-16 lg:h-20"
+                className="h-14 w-auto object-contain drop-shadow-[0_4px_24px_rgba(201,162,39,0.25)] sm:h-16 md:h-[72px] lg:h-20 filter invert brightness-200"
               />
             </button>
 
@@ -89,7 +89,7 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
               <button
                 type="button"
                 onClick={onOpenLocationModal}
-                className="hidden max-w-[200px] truncate text-right text-[10px] font-semibold uppercase leading-tight tracking-[0.18em] text-[#071326]/80 transition-colors hover:text-[#C9A227] md:block lg:max-w-none"
+                className="hidden max-w-[200px] truncate text-right text-[10px] font-semibold uppercase leading-tight tracking-[0.18em] text-white/80 transition-colors hover:text-[#C9A227] md:block lg:max-w-none"
               >
                 How you&apos;d like to receive your order
               </button>
@@ -97,7 +97,7 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
               <button
                 type="button"
                 onClick={onOpenLocationModal}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-[#071326]/15 bg-[#071326]/5 text-[#071326] backdrop-blur-md transition-all duration-300 hover:border-[#C9A227] hover:bg-[#C9A227]/10 hover:text-[#C9A227] md:hidden"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white backdrop-blur-md transition-all duration-300 hover:border-[#C9A227]/40 hover:bg-[#C9A227]/10 hover:text-[#C9A227] md:hidden"
                 aria-label="Order delivery options"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -109,12 +109,12 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
               <button
                 type="button"
                 onClick={onOpenCart}
-                className="relative flex h-10 w-10 items-center justify-center rounded-full border border-[#071326]/15 bg-[#071326]/5 text-[#071326] backdrop-blur-md transition-all duration-300 hover:border-[#C9A227] hover:bg-[#C9A227]/10 hover:text-[#C9A227]"
+                className="relative flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white backdrop-blur-md transition-all duration-300 hover:border-[#C9A227]/40 hover:bg-[#C9A227]/10 hover:text-[#C9A227]"
                 aria-label="Open cart"
               >
                 <ShoppingCart size={18} strokeWidth={1.5} />
                 {cartCount > 0 && (
-                  <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#C9A227] text-[10px] font-bold text-white">
+                  <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#C9A227] text-[10px] font-bold text-[#05070c]">
                     {cartCount}
                   </span>
                 )}
@@ -123,7 +123,7 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
           </div>
         </div>
 
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-[#071326]/10 to-transparent" />
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       </header>
 
       {/* Category sidebar */}
