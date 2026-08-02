@@ -684,9 +684,14 @@ function App() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10 sm:mb-12">
             {/* Logo & Brand */}
             <div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#071326] mb-3 sm:mb-4" style={{ fontFamily: 'Fraunces, serif' }}>
-                M.A BAKERS
-              </h3>
+              <img 
+                src="/images/ma-bakers-white-logo.png" 
+                alt="M.A BAKERS - Premium Frozen Foods" 
+                className="h-14 sm:h-16 w-auto object-contain mb-2 text-[#071326]"
+              />
+              <p className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em] text-[#C9A227] mb-3">
+                Premium Frozen Foods & Bakery
+              </p>
               <p className="text-[#071326]/60 text-xs sm:text-sm mb-2">+92 309 3660360</p>
               <p className="text-[#071326]/60 text-xs sm:text-sm mb-2">cake@mabakers.com</p>
               <p className="text-[#071326]/60 text-xs sm:text-sm">Nawabshah & Karachi, Pakistan</p>

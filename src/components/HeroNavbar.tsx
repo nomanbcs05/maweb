@@ -78,9 +78,9 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 shrink-0 transition-transform duration-300 hover:scale-[1.02]"
             >
               <img
-                src="/images/ma-bakers-logo.png"
+                src="/images/ma-bakers-white-logo.png"
                 alt="M.A BAKERS"
-                className="h-14 w-auto object-contain drop-shadow-[0_4px_24px_rgba(201,162,39,0.25)] sm:h-16 md:h-[72px] lg:h-20 invert brightness-150"
+                className="h-14 w-auto object-contain drop-shadow-[0_4px_24px_rgba(201,162,39,0.25)] sm:h-16 md:h-[72px] lg:h-20 filter invert brightness-200"
               />
             </button>
 
