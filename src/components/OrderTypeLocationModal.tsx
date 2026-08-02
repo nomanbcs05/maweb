@@ -102,30 +102,30 @@ export const OrderTypeLocationModal: React.FC<OrderTypeLocationModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="w-full max-w-[480px] rounded-3xl overflow-hidden shadow-2xl bg-white flex flex-col max-h-[90vh]">
-        <div className="p-6 text-center flex-1 overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/50 backdrop-blur-sm">
+      <div className="w-full max-w-[400px] rounded-2xl overflow-hidden shadow-2xl bg-white flex flex-col">
+        <div className="p-4 text-center flex-1">
           {/* Logo */}
-          <div className="mb-3 flex justify-center">
+          <div className="mb-1 flex justify-center">
             <img 
               src="/images/ma-bakers-logo.png" 
               alt="M.A Bakers" 
-              className="h-24 sm:h-32 w-auto object-contain"
+              className="h-12 sm:h-14 w-auto object-contain"
             />
           </div>
 
           {/* Heading */}
-          <h2 className="text-xl font-bold mb-4 text-[#1f2937]" style={{ fontFamily: 'serif' }}>
+          <h2 className="text-base font-bold mb-2 text-[#1f2937]" style={{ fontFamily: 'serif' }}>
             Select your order type
           </h2>
 
           {/* Order Type Buttons */}
-          <div className="flex gap-0 mb-6 justify-center bg-gray-200 rounded-full overflow-hidden p-1">
+          <div className="flex gap-0 mb-3 justify-center bg-gray-100 rounded-full overflow-hidden p-1 border border-gray-200">
             <button
               onClick={() => setOrderType('delivery')}
-              className={`flex-1 px-8 py-2 text-sm font-bold uppercase transition-all cursor-pointer rounded-full ${
+              className={`flex-1 py-1.5 px-4 text-xs font-bold uppercase transition-all cursor-pointer rounded-full ${
                 orderType === 'delivery'
-                  ? 'bg-white text-[#9B2226] border border-[#9B2226]'
+                  ? 'bg-white text-[#9B2226] border border-[#9B2226] shadow-sm'
                   : 'bg-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
@@ -134,9 +134,9 @@ export const OrderTypeLocationModal: React.FC<OrderTypeLocationModalProps> = ({
 
             <button
               onClick={() => setOrderType('pickup')}
-              className={`flex-1 px-8 py-2 text-sm font-bold uppercase transition-all cursor-pointer rounded-full ${
+              className={`flex-1 py-1.5 px-4 text-xs font-bold uppercase transition-all cursor-pointer rounded-full ${
                 orderType === 'pickup'
-                  ? 'bg-white text-[#9B2226] border border-[#9B2226]'
+                  ? 'bg-white text-[#9B2226] border border-[#9B2226] shadow-sm'
                   : 'bg-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
@@ -145,75 +145,75 @@ export const OrderTypeLocationModal: React.FC<OrderTypeLocationModalProps> = ({
           </div>
 
           {/* Location Section */}
-          <div className="mb-4">
+          <div className="mb-2">
             {orderType === 'delivery' ? (
               <>
                 {/* Use Current Location Button */}
                 <button 
                   onClick={handleUseCurrentLocation}
                   disabled={isLocating}
-                  className="flex items-center justify-center gap-2 mx-auto mb-6 px-6 py-3 bg-[#9B2226] text-white rounded-full text-sm font-medium hover:bg-[#7F1D1D] transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="flex items-center justify-center gap-1.5 mx-auto mb-3 px-4 py-2 bg-[#9B2226] text-white rounded-full text-xs font-medium hover:bg-[#7F1D1D] transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {isLocating ? (
-                    <div className="w-4 h-4 border-2 border-white/50 border-t-white rounded-full animate-spin"></div>
+                    <div className="w-3.5 h-3.5 border-2 border-white/50 border-t-white rounded-full animate-spin"></div>
                   ) : (
-                    <Navigation size={16} />
+                    <Navigation size={14} />
                   )}
                   Use Current Location
                 </button>
 
                 {deliveryStep === 'branch' ? (
                   <>
-                    <p className="text-base text-[#1f2937] mb-4 font-medium text-center">
+                    <p className="text-xs text-[#1f2937] mb-2 font-semibold tracking-wide text-center uppercase">
                       STEP 1 — SELECT BRANCH
                     </p>
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                       {branchesData.map(branch => (
                         <button
                           key={branch.id}
                           onClick={() => handleSelectBranch(branch.id)}
-                          className={`w-full flex items-center justify-between px-4 py-5 rounded-lg border-2 transition-all cursor-pointer ${
+                          className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg border transition-all cursor-pointer ${
                             selectedBranch === branch.id
                               ? 'border-[#9B2226] bg-[#9B2226]/5'
                               : 'border-gray-200 hover:border-[#9B2226]/50'
                           }`}
                         >
-                          <span className="font-medium text-[#1f2937] text-left">{branch.name}</span>
-                          {selectedBranch === branch.id && <Check size={22} className="text-[#9B2226] flex-shrink-0" />}
+                          <span className="font-medium text-[#1f2937] text-left text-xs sm:text-sm">{branch.name}</span>
+                          {selectedBranch === branch.id && <Check size={18} className="text-[#9B2226] flex-shrink-0" />}
                         </button>
                       ))}
                     </div>
                   </>
                 ) : (
                   <>
-                    <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center justify-between mb-2">
                       <button
                         onClick={handleBackToBranches}
-                        className="flex items-center gap-1 text-[#9B2226] hover:text-[#7F1D1D] transition-colors cursor-pointer"
+                        className="flex items-center gap-1 text-xs text-[#9B2226] hover:text-[#7F1D1D] font-medium transition-colors cursor-pointer"
                       >
-                        <ChevronLeft size={20} />
+                        <ChevronLeft size={16} />
                         Back
                       </button>
-                      <p className="text-base text-[#1f2937] font-medium">
+                      <p className="text-xs text-[#1f2937] font-semibold uppercase">
                         STEP 2 — SELECT LOCATION
                       </p>
-                      <div className="w-12"></div>
+                      <div className="w-8"></div>
                     </div>
-                    <div className="space-y-3 overflow-y-auto max-h-[300px] pb-2">
+                    <div className="space-y-1.5 max-h-[160px] overflow-y-auto pr-1">
                       {branchesData
                         .find(b => b.id === selectedBranch)!
                         .locations.map(location => (
                           <button
                             key={location}
                             onClick={() => setSelectedLocation(location)}
-                            className={`w-full flex items-center justify-between px-4 py-4 rounded-lg border-2 transition-all cursor-pointer ${
+                            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg border transition-all cursor-pointer ${
                               selectedLocation === location
                                 ? 'border-[#9B2226] bg-[#9B2226]/5'
                                 : 'border-gray-200 hover:border-[#9B2226]/50'
                             }`}
                           >
-                            <span className="text-sm text-[#1f2937] text-left">{location}</span>
-                            {selectedLocation === location && <Check size={20} className="text-[#9B2226] flex-shrink-0" />}
+                            <span className="text-xs text-[#1f2937] text-left">{location}</span>
+                            {selectedLocation === location && <Check size={16} className="text-[#9B2226] flex-shrink-0" />}
                           </button>
                         ))}
                     </div>
@@ -222,7 +222,7 @@ export const OrderTypeLocationModal: React.FC<OrderTypeLocationModalProps> = ({
               </>
             ) : (
               <>
-                <p className="text-base text-[#1f2937] mb-3 font-medium">
+                <p className="text-xs text-[#1f2937] mb-2 font-medium">
                   Please select your location
                 </p>
 
@@ -230,12 +230,12 @@ export const OrderTypeLocationModal: React.FC<OrderTypeLocationModalProps> = ({
                 <button 
                   onClick={handleUseCurrentLocation}
                   disabled={isLocating}
-                  className="flex items-center justify-center gap-2 mx-auto mb-6 px-6 py-3 bg-[#9B2226] text-white rounded-full text-sm font-medium hover:bg-[#7F1D1D] transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="flex items-center justify-center gap-1.5 mx-auto mb-3 px-4 py-2 bg-[#9B2226] text-white rounded-full text-xs font-medium hover:bg-[#7F1D1D] transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {isLocating ? (
-                    <div className="w-4 h-4 border-2 border-white/50 border-t-white rounded-full animate-spin"></div>
+                    <div className="w-3.5 h-3.5 border-2 border-white/50 border-t-white rounded-full animate-spin"></div>
                   ) : (
-                    <Navigation size={16} />
+                    <Navigation size={14} />
                   )}
                   Use Current Location
                 </button>
@@ -244,7 +244,7 @@ export const OrderTypeLocationModal: React.FC<OrderTypeLocationModalProps> = ({
                   <select
                     value={selectedLocation}
                     onChange={(e) => setSelectedLocation(e.target.value)}
-                    className="w-full px-4 py-4 text-base border border-gray-300 rounded-lg bg-white text-[#1f2937] outline-none focus:border-[#9B2226] transition-colors appearance-none cursor-pointer"
+                    className="w-full px-3 py-2.5 text-xs sm:text-sm border border-gray-300 rounded-lg bg-white text-[#1f2937] outline-none focus:border-[#9B2226] transition-colors appearance-none cursor-pointer"
                   >
                     <option value="">Select Branch</option>
                     {branches.map(branch => (
@@ -259,8 +259,8 @@ export const OrderTypeLocationModal: React.FC<OrderTypeLocationModalProps> = ({
                       </>
                     )}
                   </select>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[#1f2937]/40 pointer-events-none">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[#1f2937]/40 pointer-events-none">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M6 9l6 6 6-6" />
                     </svg>
                   </div>
@@ -271,7 +271,7 @@ export const OrderTypeLocationModal: React.FC<OrderTypeLocationModalProps> = ({
         </div>
 
         {/* Select Button */}
-        <div className="px-6 pb-6 pt-0">
+        <div className="px-4 pb-4 pt-0">
           <button
             onClick={handleSelect}
             disabled={
@@ -281,13 +281,13 @@ export const OrderTypeLocationModal: React.FC<OrderTypeLocationModalProps> = ({
                 (deliveryStep === 'location' && !selectedLocation)
               ))
             }
-            className={`w-full py-4 rounded-lg font-bold text-xl uppercase tracking-wider transition-all cursor-pointer ${
+            className={`w-full py-2.5 rounded-lg font-bold text-sm uppercase tracking-wider transition-all cursor-pointer ${
               (orderType === 'pickup' && !selectedLocation) ||
               (orderType === 'delivery' && (
                 (deliveryStep === 'branch' && !selectedBranch) ||
                 (deliveryStep === 'location' && !selectedLocation)
               ))
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                 : 'bg-[#9B2226] text-white hover:bg-[#7F1D1D] hover:shadow-md'
             }`}
           >
