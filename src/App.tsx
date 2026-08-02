@@ -685,7 +685,7 @@ function App() {
             {/* Logo & Brand */}
             <div>
               <img 
-                src="/images/ma-bakers-white-logo.png" 
+                src="/images/footer-logo.png" 
                 alt="M.A BAKERS - Premium Frozen Foods" 
                 className="h-16 sm:h-20 w-auto object-contain mb-3"
               />
