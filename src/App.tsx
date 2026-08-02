@@ -754,7 +754,7 @@ function App() {
                 <li><a href="#" className="hover:text-[#D4AF37] transition-colors">Brand Story</a></li>
                 <li>
                   <button 
-                    onClick={() => setIsLocationModalOpen(true)} 
+                    onClick={() => setIsOrderTypeModalOpen(true)} 
                     className="hover:text-[#D4AF37] transition-colors cursor-pointer text-left block"
                   >
                     <span className="font-semibold text-white">Branches</span>
