@@ -29,7 +29,7 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
 
   return (
     <>
-      <header className="relative z-50 w-full bg-[#05070c]">
+      <header className="relative z-50 w-full bg-[#071326]">
         {/* Gold accent line */}
         <div className="h-px w-full bg-gradient-to-r from-transparent via-[#C9A227]/70 to-transparent" />
 

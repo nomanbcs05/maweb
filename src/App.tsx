@@ -291,17 +291,17 @@ function App() {
         }> = {
           'Cakes': {
             description: 'Indulge in our handcrafted cakes, baked fresh daily with premium ingredients. From rich chocolate cakes to light fruit gateaux, every slice tells a story of passion and perfection.',
-            image: 'https://images.unsplash.com/photo-1505250469679-6c5e6a47f5ca?w=1400&q=80&auto=format&fit=crop',
+            image: '/images/categories/cakes.png',
             subtitle: 'Celebrate Every Moment'
           },
           'Pastries': {
             description: 'Experience buttery, flaky perfection with our artisan pastries. Each piece is crafted with love, using traditional techniques passed down through generations.',
-            image: 'https://images.unsplash.com/photo-1528744598421-b7c8b79ca0f4?w=1400&q=80&auto=format&fit=crop',
+            image: '/images/categories/pastries.png',
             subtitle: 'Buttery & Delicate'
           },
           'Breads': {
             description: 'Discover the art of slow fermentation with our artisan breads. From crusty sourdough to soft dinner rolls, each loaf is a testament to timeless baking.',
-            image: '/placeholder_images/generic_placeholder.jpg',
+            image: '/images/categories/breads.png',
             subtitle: 'Slow-Fermented Perfection'
           },
           'Cookies': {
@@ -330,7 +330,7 @@ function App() {
                   
                   const meta = categoryMeta[category.name] || {
                     description: 'Discover our delicious selection of baked goods in this category.',
-                    image: 'https://coresg-normal.trae.ai/api/v1/text-to-image?prompt=general%20bakery%20products%20professional%20photography&image_size=square_hd',
+                    image: '/images/categories/cakes.png',
                     subtitle: 'Fresh & Delicious'
                   };
 
@@ -341,7 +341,7 @@ function App() {
                       {/* Category Hero Section */}
                       <section className="mb-8 sm:mb-12">
                         <div className="max-w-7xl mx-auto">
-                          {category.name === 'Cakes' || category.name === 'Pastries' ? (
+                          {category.name === 'Cakes' || category.name === 'Pastries' || category.name === 'Breads' ? (
                             /* Cakes and Pastries categories with reference style */
                             <div className="relative bg-white px-4 sm:px-6">
                               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-0">
@@ -693,29 +693,47 @@ function App() {
                 Premium Frozen Foods & Bakery
               </p>
               <div className="space-y-2 text-gray-300 text-xs sm:text-sm font-medium">
-                <p className="flex items-center gap-2">
+                <a href="tel:+923093660360" className="flex items-center gap-2 hover:text-[#D4AF37] transition-colors">
                   <span className="text-[#D4AF37]">📞</span> +92 309 3660360
-                </p>
+                </a>
+                <a href="mailto:mabakersofficials@gmail.com" className="flex items-center gap-2 hover:text-[#D4AF37] transition-colors">
+                  <span className="text-[#D4AF37]">✉️</span> mabakersofficials@gmail.com
+                </a>
                 <p className="flex items-center gap-2">
-                  <span className="text-[#D4AF37]">✉️</span> cake@mabakers.com
-                </p>
-                <p className="flex items-center gap-2">
-                  <span className="text-[#D4AF37]">📍</span> Nawabshah & Karachi, Pakistan
+                  <span className="text-[#D4AF37]">📍</span> Nawabshah, Pakistan
                 </p>
               </div>
               {/* Social Icons */}
               <div className="flex gap-3 mt-5">
-                <a href="#" className="w-9 h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-[#D4AF37] hover:text-[#071326] hover:border-[#D4AF37] transition-all">
-                  <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                {/* Facebook */}
+                <a 
+                  href="https://www.facebook.com/share/18zSkxhRaG/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="w-9 h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-[#D4AF37] hover:text-[#071326] hover:border-[#D4AF37] transition-all"
+                  aria-label="Facebook"
+                >
+                  <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                 </a>
-                <a href="#" className="w-9 h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-[#D4AF37] hover:text-[#071326] hover:border-[#D4AF37] transition-all">
+                {/* Instagram */}
+                <a 
+                  href="https://www.instagram.com/m.a_bakers_nws?igsh=MWVrbzF0NmRsbDlqMA==" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="w-9 h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-[#D4AF37] hover:text-[#071326] hover:border-[#D4AF37] transition-all"
+                  aria-label="Instagram"
+                >
                   <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                 </a>
-                <a href="#" className="w-9 h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-[#D4AF37] hover:text-[#071326] hover:border-[#D4AF37] transition-all">
-                  <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
-                </a>
-                <a href="#" className="w-9 h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-[#D4AF37] hover:text-[#071326] hover:border-[#D4AF37] transition-all">
-                  <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3 8h-1.35c-.538 0-.65.221-.65.778v1.222h2l-.209 2h-1.791v7h-3v-7h-2v-2h2v-2.308c0-1.769.931-2.692 3.029-2.692h1.971v3z"/></svg>
+                {/* WhatsApp */}
+                <a 
+                  href="https://wa.me/923093660360" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="w-9 h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all"
+                  aria-label="WhatsApp"
+                >
+                  <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                 </a>
               </div>
             </div>
@@ -725,10 +743,25 @@ function App() {
               <h4 className="text-sm font-bold uppercase tracking-wider text-[#D4AF37] mb-4 border-b border-white/10 pb-2">Information</h4>
               <ul className="space-y-2.5 text-gray-300 text-xs sm:text-sm font-medium">
                 <li><a href="#" className="hover:text-[#D4AF37] transition-colors">Company Profile</a></li>
-                <li><a href="#" className="hover:text-[#D4AF37] transition-colors">Our Products</a></li>
+                <li>
+                  <button 
+                    onClick={scrollToCatalog}
+                    className="hover:text-[#D4AF37] transition-colors cursor-pointer text-left"
+                  >
+                    Products
+                  </button>
+                </li>
                 <li><a href="#" className="hover:text-[#D4AF37] transition-colors">Brand Story</a></li>
-                <li><a href="#" className="hover:text-[#D4AF37] transition-colors">Services & Catering</a></li>
-                <li><a href="#" className="hover:text-[#D4AF37] transition-colors">Franchise Opportunities</a></li>
+                <li>
+                  <button 
+                    onClick={() => setIsLocationModalOpen(true)} 
+                    className="hover:text-[#D4AF37] transition-colors cursor-pointer text-left block"
+                  >
+                    <span className="font-semibold text-white">Branches</span>
+                    <span className="block text-[11px] text-gray-400 font-normal mt-0.5">M.A Bakers 1 — Dhamra Road</span>
+                    <span className="block text-[11px] text-gray-400 font-normal">M.A Bakers 2 — Jam Sahib Road</span>
+                  </button>
+                </li>
               </ul>
             </div>
 
@@ -737,8 +770,14 @@ function App() {
               <h4 className="text-sm font-bold uppercase tracking-wider text-[#D4AF37] mb-4 border-b border-white/10 pb-2">About Us</h4>
               <ul className="space-y-2.5 text-gray-300 text-xs sm:text-sm font-medium">
                 <li><a href="#" className="hover:text-[#D4AF37] transition-colors">Product Gallery</a></li>
-                <li><a href="#" className="hover:text-[#D4AF37] transition-colors">Branch Locations</a></li>
-                <li><a href="#" className="hover:text-[#D4AF37] transition-colors">Contact Us</a></li>
+                <li>
+                  <a 
+                    href="tel:+923093660360" 
+                    className="hover:text-[#D4AF37] transition-colors flex items-center gap-1.5"
+                  >
+                    Contacts: <span className="text-[#D4AF37] font-semibold">+92 309 3660360</span>
+                  </a>
+                </li>
                 <li><a href="#" className="hover:text-[#D4AF37] transition-colors">Quality Assurance</a></li>
               </ul>
             </div>
