@@ -80,7 +80,7 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
               <img
                 src="/images/navbar-logo.png"
                 alt="M.A BAKERS"
-                className="h-8 sm:h-10 md:h-12 lg:h-14 w-auto object-contain drop-shadow-[0_2px_12px_rgba(201,162,39,0.25)]"
+                className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto object-contain drop-shadow-[0_2px_12px_rgba(201,162,39,0.25)]"
               />
             </button>
 
