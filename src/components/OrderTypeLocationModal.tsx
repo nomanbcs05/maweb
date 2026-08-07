@@ -108,7 +108,7 @@ export const OrderTypeLocationModal: React.FC<OrderTypeLocationModalProps> = ({
           {/* Logo */}
           <div className="mb-1 flex justify-center">
             <img 
-              src="/images/ma-bakers-logo.png" 
+              src="/logo.png" 
               alt="M.A Bakers" 
               className="h-12 sm:h-14 w-auto object-contain"
             />
