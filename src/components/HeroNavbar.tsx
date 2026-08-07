@@ -29,7 +29,7 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
 
   return (
     <>
-      <header className="relative z-50 w-full bg-[#071326]">
+      <header className="relative z-50 w-full bg-[#2f2626]">
         {/* Gold accent line */}
         <div className="h-px w-full bg-gradient-to-r from-transparent via-[#C9A227]/70 to-transparent" />
 
@@ -80,7 +80,7 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
               <img
                 src="/images/navbar-logo.png"
                 alt="M.A BAKERS"
-                className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto object-contain drop-shadow-[0_2px_12px_rgba(201,162,39,0.25)]"
+                className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain drop-shadow-[0_2px_12px_rgba(201,162,39,0.25)]"
               />
             </button>
 
