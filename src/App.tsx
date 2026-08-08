@@ -694,12 +694,12 @@ function App() {
               <img 
                 src="/images/footer-logo.png" 
                 alt="M.A BAKERS - Premium Frozen Foods" 
-                className="h-16 sm:h-20 w-auto object-contain mb-3"
+                className="h-16 sm:h-20 w-auto object-contain mb-1"
               />
-              <p className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.25em] text-[#D4AF37] mb-4">
-                Premium Frozen Foods & Bakery
+              <p className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.25em] text-[#D4AF37] mb-2">
+                Premium Frozen Foods &amp; Bakery
               </p>
-              <div className="space-y-2 text-stone-200 text-xs sm:text-sm font-medium">
+              <div className="space-y-1.5 text-stone-200 text-xs sm:text-sm font-medium">
                 <a href="tel:+923093660360" className="flex items-center gap-2 hover:text-[#D4AF37] transition-colors">
                   <span className="text-[#D4AF37]">📞</span> +92 309 3660360
                 </a>
@@ -710,8 +710,19 @@ function App() {
                   <span className="text-[#D4AF37]">📍</span> Nawabshah, Pakistan
                 </p>
               </div>
+              {/* Branches */}
+              <div className="mt-3">
+                <button
+                  onClick={() => setIsOrderTypeModalOpen(true)}
+                  className="text-left hover:text-[#D4AF37] transition-colors cursor-pointer"
+                >
+                  <span className="text-xs font-semibold text-white">Branches</span>
+                  <span className="block text-[11px] text-gray-400 font-normal mt-0.5">M.A Bakers 1 — Dhamra Road</span>
+                  <span className="block text-[11px] text-gray-400 font-normal">M.A Bakers 2 — Jam Sahib Road</span>
+                </button>
+              </div>
               {/* Social Icons */}
-              <div className="flex gap-3 mt-5">
+              <div className="flex gap-3 mt-3">
                 {/* Facebook */}
                 <a 
                   href="https://www.facebook.com/share/18zSkxhRaG/" 
@@ -769,16 +780,6 @@ function App() {
                   </button>
                 </li>
                 <li><a href="#" className="hover:text-[#D4AF37] transition-colors">Brand Story</a></li>
-                <li>
-                  <button 
-                    onClick={() => setIsOrderTypeModalOpen(true)} 
-                    className="hover:text-[#D4AF37] transition-colors cursor-pointer text-left block"
-                  >
-                    <span className="font-semibold text-white">Branches</span>
-                    <span className="block text-[11px] text-gray-400 font-normal mt-0.5">M.A Bakers 1 — Dhamra Road</span>
-                    <span className="block text-[11px] text-gray-400 font-normal">M.A Bakers 2 — Jam Sahib Road</span>
-                  </button>
-                </li>
               </ul>
             </div>
 
@@ -892,7 +893,7 @@ function App() {
           </div>
 
           {/* Copyright */}
-          <div className="text-center pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="pt-8 border-t border-white/10 flex flex-col items-center gap-2">
             <p className="text-gray-400 text-xs">
               © 2026 <span className="text-white font-semibold">M.A BAKERS</span>. All Rights Reserved.
             </p>
