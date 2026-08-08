@@ -694,7 +694,7 @@ function App() {
               <img 
                 src="/images/footer-logo.png" 
                 alt="M.A BAKERS - Premium Frozen Foods" 
-                className="h-16 sm:h-20 w-auto object-contain mb-1"
+                className="h-32 sm:h-40 w-auto object-contain mb-1"
               />
               <p className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.25em] text-[#D4AF37] mb-2">
                 Premium Frozen Foods &amp; Bakery
@@ -893,12 +893,9 @@ function App() {
           </div>
 
           {/* Copyright */}
-          <div className="pt-8 border-t border-white/10 flex flex-col items-center gap-2">
+          <div className="pt-8 border-t border-white/10 text-center">
             <p className="text-gray-400 text-xs">
-              © 2026 <span className="text-white font-semibold">M.A BAKERS</span>. All Rights Reserved.
-            </p>
-            <p className="text-gray-400 text-xs">
-              Powered by <span className="text-[#D4AF37] font-semibold">Genx Cloud</span>
+              © 2026 <span className="text-white font-semibold">M.A BAKERS</span>. All Rights Reserved. Powered by <span className="text-[#D4AF37] font-semibold">Genx Cloud</span>
             </p>
           </div>
         </div>
