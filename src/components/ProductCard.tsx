@@ -43,7 +43,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         
         {/* Price */}
         <p className="text-base font-bold text-rose-700 mb-3">
-          FROM Rs. {minPrice}
+          Rs. {selectedOption ? selectedOption.price : minPrice}
         </p>
         
         <p className="text-xs text-stone-500 line-clamp-2 mb-4 flex-1 leading-relaxed">

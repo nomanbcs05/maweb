@@ -12,10 +12,9 @@ const staticProducts: Product[] = [
     { label: '1LB', value: '1lb', price: 550 },
     { label: '2LB', value: '2lb', price: 1000 }
   ], image: '/images/products/cakes/pineapple-ice-cake.png', gallery: [], featured: false, best_seller: false, new_arrival: true, available: true, stock_quantity: 8, minimum_order: 1, preparation_time: '1 hour', tags: ['Pineapple', 'Ice Cake'], ingredients: ['Flour', 'Sugar', 'Butter', 'Pineapple', 'Cream', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
-  { id: 'cake3', name: 'Dry Fruit Cake', slug: 'dry-fruit-cake', category: 'Cakes', description: 'Rich dry fruit cake with assorted nuts and fruits.', price: 1000, unit: 'Kg', quantityOptions: [
-    { label: '250g', value: '250g', price: 300 },
-    { label: '500g', value: '500g', price: 550 },
-    { label: '1kg', value: '1kg', price: 1000 }
+  { id: 'cake3', name: 'Dry Fruit Cake', slug: 'dry-fruit-cake', category: 'Cakes', description: 'Rich dry fruit cake with assorted nuts and fruits.', price: 600, unit: 'Pound', quantityOptions: [
+    { label: '1LB', value: '1lb', price: 600 },
+    { label: '2LB', value: '2lb', price: 1100 }
   ], image: '/images/products/cakes/dry-fruit-cake.png', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 12, minimum_order: 1, preparation_time: '1 hour', tags: ['Dry Fruit', 'Nuts'], ingredients: ['Flour', 'Sugar', 'Butter', 'Dry Fruits', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs', 'Nuts'] },
   { id: 'cake4', name: 'Three Milk Cake', slug: 'three-milk-cake', category: 'Cakes', description: 'Moist three milk (tres leches) cake.', price: 1300, unit: 'Kg', quantityOptions: [
     { label: '250g', value: '250g', price: 400 },
@@ -67,11 +66,11 @@ const staticProducts: Product[] = [
     { label: '1 PC', value: '1pc', price: 25 }
   ], image: '/images/products/breads/burger-buns.png', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 50, minimum_order: 1, preparation_time: '30 mins', tags: ['Burger Buns', 'Bread'], ingredients: ['Flour', 'Water', 'Salt', 'Yeast', 'Sugar', 'Butter'], allergens: ['Gluten', 'Dairy'] },
   // Cookies (Tea Time Munchies)
-  { id: 'cookie1', name: 'Khaasry', slug: 'khaasry', category: 'Cookies', description: 'Delicious khaasry.', price: 600, unit: 'Kg', quantityOptions: [
+  { id: 'cookie1', name: 'Khaaray', slug: 'khaaray', category: 'Cookies', description: 'Delicious khaaray.', price: 600, unit: 'Kg', quantityOptions: [
     { label: '250g', value: '250g', price: 180 },
     { label: '500g', value: '500g', price: 350 },
     { label: '1kg', value: '1kg', price: 600 }
-  ], image: '/images/products/cookies/khaasry.png', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 20, minimum_order: 1, preparation_time: '20 mins', tags: ['Khaasry', 'Tea Time', 'Cookies'], ingredients: ['Flour', 'Sugar', 'Butter', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  ], image: '/images/products/cookies/khaasry.png', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 20, minimum_order: 1, preparation_time: '20 mins', tags: ['Khaaray', 'Tea Time', 'Cookies'], ingredients: ['Flour', 'Sugar', 'Butter', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   { id: 'cookie2', name: 'Biscuits', slug: 'biscuits', category: 'Cookies', description: 'Classic biscuits.', price: 700, unit: 'Kg', quantityOptions: [
     { label: '250g', value: '250g', price: 200 },
     { label: '500g', value: '500g', price: 400 },
