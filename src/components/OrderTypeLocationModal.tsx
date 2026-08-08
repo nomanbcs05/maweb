@@ -32,19 +32,39 @@ export const OrderTypeLocationModal: React.FC<OrderTypeLocationModalProps> = ({
     setIsLocating(true);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        async (position) => {
           const { latitude, longitude } = position.coords;
-          const locationName = `Current Location (${latitude.toFixed(4)}, ${longitude.toFixed(4)})`;
-          setUserLocation({ lat: latitude, lng: longitude, name: locationName });
-          setSelectedLocation(locationName);
-          // Open Google Maps with the user's location
+          let realAddress = `Location Pin (${latitude.toFixed(4)}, ${longitude.toFixed(4)})`;
+
+          try {
+            const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
+            if (res.ok) {
+              const data = await res.json();
+              if (data && data.display_name) {
+                realAddress = data.display_name;
+              }
+            }
+          } catch (err) {
+            console.warn('Could not reverse geocode address:', err);
+          }
+
+          const userLoc = { lat: latitude, lng: longitude, name: realAddress };
+          setUserLocation(userLoc);
+          setSelectedLocation(realAddress);
+
+          if (!selectedBranch && branchesData.length > 0) {
+            setSelectedBranch(branchesData[0].id);
+          }
+          setDeliveryStep('location');
+
+          // Open Google Maps centered on the user's location
           const mapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
           window.open(mapsUrl, '_blank');
           setIsLocating(false);
         },
         (error) => {
           console.error('Geolocation error:', error);
-          alert('Could not get your location. Please select manually.');
+          alert('Could not detect your exact location. Please enable GPS/Location in your browser settings or select manually.');
           setIsLocating(false);
         },
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
