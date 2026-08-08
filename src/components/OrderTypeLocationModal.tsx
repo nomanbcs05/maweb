@@ -130,7 +130,7 @@ export const OrderTypeLocationModal: React.FC<OrderTypeLocationModalProps> = ({
             <img 
               src="/logo.png" 
               alt="M.A Bakers" 
-              className="h-12 sm:h-14 w-auto object-contain"
+              className="h-36 sm:h-42 w-auto object-contain"
             />
           </div>
 
