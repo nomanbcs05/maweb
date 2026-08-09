@@ -20,11 +20,11 @@ const SLIDES = [
   },
   {
     id: 5,
-    image: '/images/hero/hero-paratha.png',
+    image: '/images/hero/hero-paratha.png?v=2',
   },
   {
     id: 6,
-    image: '/images/hero/hero-paratha-51pcs.png',
+    image: '/images/hero/hero-paratha-5pcs.png?v=2',
   },
 ] as const;
 
