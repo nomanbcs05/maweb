@@ -698,7 +698,7 @@ function App() {
       </section>
 
       {/* REDESIGNED LUXURY DARK FOOTER MATCHING NAVBAR */}
-      <footer className="bg-[#2f2626] text-white pt-10 pb-4 sm:pt-14 sm:pb-5 px-4 sm:px-6 border-t border-[#D4AF37]/30 shadow-2xl relative">
+      <footer className="bg-[#2f2626] text-white pt-6 pb-4 sm:pt-8 sm:pb-5 px-4 sm:px-6 border-t border-[#D4AF37]/30 shadow-2xl relative">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-8 sm:mb-10">
             {/* Logo & Brand */}
@@ -706,7 +706,7 @@ function App() {
               <img 
                 src="/images/footer-logo.png" 
                 alt="M.A BAKERS - Premium Frozen Foods" 
-                className="h-32 sm:h-40 w-auto object-contain mb-1"
+                className="h-24 sm:h-28 w-auto object-contain -mt-1 mb-1"
               />
               <p className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.25em] text-[#D4AF37] mb-2">
                 Premium Frozen Foods &amp; Bakery

@@ -222,9 +222,8 @@ export const API = {
       return data;
     } catch (e) {
       return [
-        { id: '1', name: 'Nawabshah Main Branch', address: 'Katchery Road, Nawabshah' },
-        { id: '2', name: 'Karachi Clifton Branch', address: 'Block 5, Clifton, Karachi' },
-        { id: '3', name: 'Karachi Gulshan Branch', address: 'University Road, Gulshan-e-Iqbal' }
+        { id: 'branch-1', name: 'M.A Bakers 1 — Dhamra Road', address: 'Dhamra Road Main Factory Gate, Nawabshah' },
+        { id: 'branch-2', name: 'M.A Bakers 2 — Jam Sahib Road', address: 'Jam Sahib Road, Nawabshah' }
       ];
     }
   },

@@ -26,45 +26,51 @@ const STEP_LABELS: Record<StepId, string> = {
 
 const PAYMENT_ACCOUNTS: Record<string, string> = {
   bank_transfer: `
-    <div class="p-4 bg-amber-500/10 rounded-xl border border-amber-500/30 text-xs space-y-2.5">
-      <div class="font-bold text-amber-600 dark:text-amber-400 text-sm flex items-center gap-1.5">🏦 UBL Bank</div>
-      <div class="flex justify-between items-center py-1 border-b border-stone-200 dark:border-zinc-800">
-        <span class="text-stone-600 dark:text-stone-300 font-medium">Account Title:</span>
-        <span class="font-bold text-stone-900 dark:text-white">M.A Bakers</span>
+    <div class="p-4 bg-amber-500/10 dark:bg-amber-500/15 rounded-xl border border-amber-500/30 text-xs space-y-3">
+      <div class="font-bold text-amber-700 dark:text-amber-400 text-sm flex items-center gap-1.5 pb-2 border-b border-amber-500/20">
+        🏦 UBL Bank
       </div>
-      <div class="flex justify-between items-center py-1 border-b border-stone-200 dark:border-zinc-800">
-        <span class="text-stone-600 dark:text-stone-300 font-medium">Account Number:</span>
-        <span class="font-mono font-bold text-amber-600 dark:text-amber-400 text-sm">2665368962378</span>
+      <div class="flex justify-between items-center py-0.5">
+        <span class="text-stone-600 dark:text-stone-300 font-semibold">Account Title:</span>
+        <span class="font-bold text-stone-900 dark:text-white text-xs sm:text-sm">M.A Bakers</span>
       </div>
-      <div class="flex justify-between items-center py-1">
-        <span class="text-stone-600 dark:text-stone-300 font-medium">IBAN:</span>
-        <span class="font-mono font-bold text-stone-900 dark:text-white text-[11px] sm:text-xs">PK50UNIL0109000368962378</span>
+      <div class="flex justify-between items-center py-0.5">
+        <span class="text-stone-600 dark:text-stone-300 font-semibold">Account Number:</span>
+        <span class="font-mono font-bold text-amber-700 dark:text-amber-400 text-sm sm:text-base tracking-wider">2665368962378</span>
+      </div>
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center py-0.5 gap-1">
+        <span class="text-stone-600 dark:text-stone-300 font-semibold">IBAN:</span>
+        <span class="font-mono font-bold text-stone-900 dark:text-white text-[11px] sm:text-xs tracking-wider">PK50UNIL0109000368962378</span>
       </div>
     </div>
   `,
   jazzcash: `
-    <div class="p-4 bg-amber-500/10 rounded-xl border border-amber-500/30 text-xs space-y-2.5">
-      <div class="font-bold text-amber-600 dark:text-amber-400 text-sm flex items-center gap-1.5">📱 JazzCash Account</div>
-      <div class="flex justify-between items-center py-1 border-b border-stone-200 dark:border-zinc-800">
-        <span class="text-stone-600 dark:text-stone-300 font-medium">Account Title:</span>
-        <span class="font-bold text-stone-900 dark:text-white">Muhammad Siddique</span>
+    <div class="p-4 bg-amber-500/10 dark:bg-amber-500/15 rounded-xl border border-amber-500/30 text-xs space-y-3">
+      <div class="font-bold text-amber-700 dark:text-amber-400 text-sm flex items-center gap-1.5 pb-2 border-b border-amber-500/20">
+        📱 JazzCash Account
       </div>
-      <div class="flex justify-between items-center py-1">
-        <span class="text-stone-600 dark:text-stone-300 font-medium">Account Number:</span>
-        <span class="font-mono font-bold text-amber-600 dark:text-amber-400 text-sm">03297040402</span>
+      <div class="flex justify-between items-center py-0.5">
+        <span class="text-stone-600 dark:text-stone-300 font-semibold">Account Title:</span>
+        <span class="font-bold text-stone-900 dark:text-white text-xs sm:text-sm">Muhammad Siddique</span>
+      </div>
+      <div class="flex justify-between items-center py-0.5">
+        <span class="text-stone-600 dark:text-stone-300 font-semibold">Account Number:</span>
+        <span class="font-mono font-bold text-amber-700 dark:text-amber-400 text-sm sm:text-base tracking-wider">03297040402</span>
       </div>
     </div>
   `,
   easypaisa: `
-    <div class="p-4 bg-amber-500/10 rounded-xl border border-amber-500/30 text-xs space-y-2.5">
-      <div class="font-bold text-amber-600 dark:text-amber-400 text-sm flex items-center gap-1.5">📱 EasyPaisa Account</div>
-      <div class="flex justify-between items-center py-1 border-b border-stone-200 dark:border-zinc-800">
-        <span class="text-stone-600 dark:text-stone-300 font-medium">Account Title:</span>
-        <span class="font-bold text-stone-900 dark:text-white">Raheel Mushtaque</span>
+    <div class="p-4 bg-amber-500/10 dark:bg-amber-500/15 rounded-xl border border-amber-500/30 text-xs space-y-3">
+      <div class="font-bold text-amber-700 dark:text-amber-400 text-sm flex items-center gap-1.5 pb-2 border-b border-amber-500/20">
+        📱 EasyPaisa Account
       </div>
-      <div class="flex justify-between items-center py-1">
-        <span class="text-stone-600 dark:text-stone-300 font-medium">Account Number:</span>
-        <span class="font-mono font-bold text-amber-600 dark:text-amber-400 text-sm">03093660360</span>
+      <div class="flex justify-between items-center py-0.5">
+        <span class="text-stone-600 dark:text-stone-300 font-semibold">Account Title:</span>
+        <span class="font-bold text-stone-900 dark:text-white text-xs sm:text-sm">Raheel Mushtaque</span>
+      </div>
+      <div class="flex justify-between items-center py-0.5">
+        <span class="text-stone-600 dark:text-stone-300 font-semibold">Account Number:</span>
+        <span class="font-mono font-bold text-amber-700 dark:text-amber-400 text-sm sm:text-base tracking-wider">03093660360</span>
       </div>
     </div>
   `
@@ -296,9 +302,9 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in overflow-y-auto">
       <div className="bg-white dark:bg-zinc-950 border border-stone-200/50 dark:border-zinc-800/80 w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]">
 
-        <div className="flex-1 p-6 md:p-8 flex flex-col overflow-y-auto min-h-0">
+        <div className="flex-1 p-6 md:p-8 flex flex-col min-h-0 overflow-hidden">
 
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-4 shrink-0">
             <h2 className="font-family-fraunces text-2xl font-bold text-stone-900 dark:text-white">Checkout</h2>
             <button
               onClick={onClose}
@@ -308,7 +314,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             </button>
           </div>
 
-          <div className="flex items-center gap-2 mb-8 overflow-x-auto pb-2 scrollbar-none">
+          <div className="flex items-center gap-2 mb-6 overflow-x-auto pb-2 scrollbar-none shrink-0">
             {activeSteps.map((stepId, idx) => {
               const isActive = currentStepIndex === idx;
               const isDone = currentStepIndex > idx;
@@ -333,7 +339,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             })}
           </div>
 
-          <div className="flex-1 min-h-0">
+          <div className="flex-1 min-h-0 overflow-y-auto pr-2 pb-6">
             {currentStepId === 'details' && (
               <div className="space-y-4">
                 <h3 className="font-family-fraunces text-lg font-bold text-stone-900 dark:text-white">Customer Information</h3>
@@ -601,10 +607,9 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 </div>
 
                 {['bank_transfer', 'jazzcash', 'easypaisa'].includes(paymentMethod) && (
-                  <div className="p-4 bg-stone-50 dark:bg-zinc-900 border border-stone-200/50 dark:border-zinc-800/80 rounded-xl text-xs">
+                  <div className="mt-4">
                     <div
                       dangerouslySetInnerHTML={{ __html: PAYMENT_ACCOUNTS[paymentMethod] }}
-                      className="text-stone-700 dark:text-stone-300 leading-relaxed"
                     />
                   </div>
                 )}
@@ -651,7 +656,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             )}
           </div>
 
-          <div className="pt-4 border-t border-stone-100 dark:border-zinc-800/80 flex items-center justify-between mt-6">
+          <div className="pt-4 border-t border-stone-200 dark:border-zinc-800 flex items-center justify-between shrink-0 bg-white dark:bg-zinc-950 mt-2 z-10">
             <button
               onClick={handleBack}
               disabled={currentStepIndex === 0}

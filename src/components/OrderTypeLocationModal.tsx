@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navigation, ChevronLeft, Check } from 'lucide-react';
+import { Navigation, ChevronLeft, Check, X } from 'lucide-react';
 import { API } from '../services/api';
 import { branchesData } from '../config/branches';
 
@@ -123,7 +123,17 @@ export const OrderTypeLocationModal: React.FC<OrderTypeLocationModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/50 backdrop-blur-sm">
-      <div className="w-full max-w-[400px] rounded-2xl overflow-hidden shadow-2xl bg-white flex flex-col">
+      <div className="w-full max-w-[400px] rounded-2xl overflow-hidden shadow-2xl bg-white flex flex-col relative">
+        {/* Skip / Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 z-10 px-2 py-1 rounded-full bg-gray-100/80 hover:bg-gray-200 text-gray-500 hover:text-gray-900 transition-all cursor-pointer flex items-center gap-1 text-xs font-semibold"
+          title="Skip"
+        >
+          <span>Skip</span>
+          <X size={15} />
+        </button>
+
         <div className="p-4 text-center flex-1">
           {/* Logo */}
           <div className="mb-1 flex justify-center">
@@ -274,8 +284,8 @@ export const OrderTypeLocationModal: React.FC<OrderTypeLocationModalProps> = ({
                     ))}
                     {branches.length === 0 && (
                       <>
-                        <option value="branch-1">M.A Bakers 2 — Jam Sahib Road</option>
-                        <option value="branch-2">M.A Bakers 1 — Dhamra Road</option>
+                        <option value="branch-1">M.A Bakers 1 — Dhamra Road</option>
+                        <option value="branch-2">M.A Bakers 2 — Jam Sahib Road</option>
                       </>
                     )}
                   </select>
