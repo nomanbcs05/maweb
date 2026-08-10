@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const SLIDES = [
   {
     id: 1,
-    image: '/images/hero/hero-3-milk.png?v=2',
+    image: '/images/hero/hero-3-milk.png',
   },
   {
     id: 2,
@@ -20,11 +20,11 @@ const SLIDES = [
   },
   {
     id: 5,
-    image: '/images/hero/hero-paratha.png?v=2',
+    image: '/images/hero/hero-paratha.png',
   },
   {
     id: 6,
-    image: '/images/hero/hero-paratha-5pcs.png?v=2',
+    image: '/images/hero/hero-paratha-5pcs.png',
   },
 ] as const;
 
