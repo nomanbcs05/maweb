@@ -416,16 +416,28 @@ function App() {
                                   <p className="text-[#071326]/70 text-xs sm:text-lg leading-relaxed">
                                     {meta.description}
                                   </p>
-                                  <button 
-                                    onClick={() => {
-                                      setActiveCategory(category.name);
-                                      scrollToCatalog();
-                                    }}
-                                    className="flex items-center gap-2 text-[#C9A227] text-xs sm:text-base font-semibold cursor-pointer group hover:text-[#C9A227]/80 transition-colors"
-                                  >
-                                    <span>Explore all {category.name.toLowerCase()}</span>
-                                    <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                                  </button>
+                                  {category.name === 'Frozen Items' ? (
+                                    <a 
+                                      href="https://www.frosto.com.pk/"
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="flex items-center gap-2 text-[#C9A227] text-xs sm:text-base font-semibold cursor-pointer group hover:text-[#C9A227]/80 transition-colors"
+                                    >
+                                      <span>Explore plain pratha</span>
+                                      <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                                    </a>
+                                  ) : (
+                                    <button 
+                                      onClick={() => {
+                                        setActiveCategory(category.name);
+                                        scrollToCatalog();
+                                      }}
+                                      className="flex items-center gap-2 text-[#C9A227] text-xs sm:text-base font-semibold cursor-pointer group hover:text-[#C9A227]/80 transition-colors"
+                                    >
+                                      <span>Explore all {category.name.toLowerCase()}</span>
+                                      <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                                    </button>
+                                  )}
                                 </div>
                               </div>
                             </div>

@@ -22,10 +22,6 @@ const SLIDES = [
     id: 5,
     image: '/images/hero/hero-paratha.png',
   },
-  {
-    id: 6,
-    image: '/images/hero/hero-paratha-5pcs.png',
-  },
 ] as const;
 
 interface HeroSliderProps {
