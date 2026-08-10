@@ -698,9 +698,9 @@ function App() {
       </section>
 
       {/* REDESIGNED LUXURY DARK FOOTER MATCHING NAVBAR */}
-      <footer className="bg-[#2f2626] text-white py-12 sm:py-16 px-4 sm:px-6 border-t border-[#D4AF37]/30 shadow-2xl relative">
+      <footer className="bg-[#2f2626] text-white pt-10 pb-4 sm:pt-14 sm:pb-5 px-4 sm:px-6 border-t border-[#D4AF37]/30 shadow-2xl relative">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-12 sm:mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-8 sm:mb-10">
             {/* Logo & Brand */}
             <div>
               <img 
@@ -905,7 +905,7 @@ function App() {
           </div>
 
           {/* Copyright */}
-          <div className="pt-8 border-t border-white/10 text-center">
+          <div className="pt-5 border-t border-white/10 text-center">
             <p className="text-gray-400 text-xs">
               © 2026 <span className="text-white font-semibold">M.A BAKERS</span>. All Rights Reserved. Powered by <span className="text-[#D4AF37] font-semibold">Genx Cloud</span>
             </p>

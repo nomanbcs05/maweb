@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { X, Check, MapPin, Calendar, ChevronRight, Upload } from 'lucide-react';
+import { X, Check, MapPin, Calendar, ChevronRight } from 'lucide-react';
 import type { CartItem } from './CartDrawer';
 import type { Order } from '../types';
 import { API } from '../services/api';
@@ -25,9 +25,49 @@ const STEP_LABELS: Record<StepId, string> = {
 };
 
 const PAYMENT_ACCOUNTS: Record<string, string> = {
-  bank_transfer: `<b>Bank Al Habib</b><br>Account Title: M.A Bakers<br>Account Number: 0123-4567890-01<br>IBAN: PK36BAHL0123456789001<br>Branch: DHA Phase 5, Karachi`,
-  jazzcash: `<b>JazzCash Mobile Account</b><br>Account Title: M.A Bakers<br>Account Number: <b>0309-3660360</b><br>Send payment and upload screenshot below.`,
-  easypaisa: `<b>EasyPaisa Mobile Account</b><br>Account Title: M.A Bakers<br>Account Number: <b>0300-1234567</b><br>Send payment and upload screenshot below.`
+  bank_transfer: `
+    <div class="p-4 bg-amber-500/10 rounded-xl border border-amber-500/30 text-xs space-y-2.5">
+      <div class="font-bold text-amber-600 dark:text-amber-400 text-sm flex items-center gap-1.5">🏦 UBL Bank</div>
+      <div class="flex justify-between items-center py-1 border-b border-stone-200 dark:border-zinc-800">
+        <span class="text-stone-600 dark:text-stone-300 font-medium">Account Title:</span>
+        <span class="font-bold text-stone-900 dark:text-white">M.A Bakers</span>
+      </div>
+      <div class="flex justify-between items-center py-1 border-b border-stone-200 dark:border-zinc-800">
+        <span class="text-stone-600 dark:text-stone-300 font-medium">Account Number:</span>
+        <span class="font-mono font-bold text-amber-600 dark:text-amber-400 text-sm">2665368962378</span>
+      </div>
+      <div class="flex justify-between items-center py-1">
+        <span class="text-stone-600 dark:text-stone-300 font-medium">IBAN:</span>
+        <span class="font-mono font-bold text-stone-900 dark:text-white text-[11px] sm:text-xs">PK50UNIL0109000368962378</span>
+      </div>
+    </div>
+  `,
+  jazzcash: `
+    <div class="p-4 bg-amber-500/10 rounded-xl border border-amber-500/30 text-xs space-y-2.5">
+      <div class="font-bold text-amber-600 dark:text-amber-400 text-sm flex items-center gap-1.5">📱 JazzCash Account</div>
+      <div class="flex justify-between items-center py-1 border-b border-stone-200 dark:border-zinc-800">
+        <span class="text-stone-600 dark:text-stone-300 font-medium">Account Title:</span>
+        <span class="font-bold text-stone-900 dark:text-white">Muhammad Siddique</span>
+      </div>
+      <div class="flex justify-between items-center py-1">
+        <span class="text-stone-600 dark:text-stone-300 font-medium">Account Number:</span>
+        <span class="font-mono font-bold text-amber-600 dark:text-amber-400 text-sm">03297040402</span>
+      </div>
+    </div>
+  `,
+  easypaisa: `
+    <div class="p-4 bg-amber-500/10 rounded-xl border border-amber-500/30 text-xs space-y-2.5">
+      <div class="font-bold text-amber-600 dark:text-amber-400 text-sm flex items-center gap-1.5">📱 EasyPaisa Account</div>
+      <div class="flex justify-between items-center py-1 border-b border-stone-200 dark:border-zinc-800">
+        <span class="text-stone-600 dark:text-stone-300 font-medium">Account Title:</span>
+        <span class="font-bold text-stone-900 dark:text-white">Raheel Mushtaque</span>
+      </div>
+      <div class="flex justify-between items-center py-1">
+        <span class="text-stone-600 dark:text-stone-300 font-medium">Account Number:</span>
+        <span class="font-mono font-bold text-amber-600 dark:text-amber-400 text-sm">03093660360</span>
+      </div>
+    </div>
+  `
 };
 
 function getActiveSteps(deliveryType: 'delivery' | 'pickup', skipMethod: boolean): StepId[] {
@@ -67,8 +107,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const [scheduledDate, setScheduledDate] = useState('');
   const [scheduledTime, setScheduledTime] = useState('12:00');
 
-  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'bank_transfer' | 'jazzcash' | 'easypaisa' | 'card'>('cod');
-  const [screenshot, setScreenshot] = useState<string | null>(null);
+  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'bank_transfer' | 'jazzcash' | 'easypaisa'>('cod');
+  const screenshot: string | null = null;
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -177,10 +217,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     }
 
     if (currentStepId === 'payment') {
-      const needsScreenshot = ['bank_transfer', 'jazzcash', 'easypaisa'].includes(paymentMethod);
-      if (needsScreenshot && !screenshot) {
-        nextErrors.screenshot = 'Please upload your receipt screenshot.';
-      }
+      // Payment method selected
     }
 
     if (Object.keys(nextErrors).length > 0) {
@@ -195,19 +232,6 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const handleBack = () => {
     setErrors({});
     setCurrentStepIndex(i => Math.max(i - 1, 0));
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file || !file.type.startsWith('image/')) return;
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      if (event.target?.result) {
-        setScreenshot(event.target.result as string);
-      }
-    };
-    reader.readAsDataURL(file);
   };
 
   const handleSubmit = async () => {
@@ -562,8 +586,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     { id: 'cod', name: 'Cash on Delivery' },
                     { id: 'bank_transfer', name: 'Bank Transfer' },
                     { id: 'jazzcash', name: 'JazzCash Mobile' },
-                    { id: 'easypaisa', name: 'EasyPaisa Account' },
-                    { id: 'card', name: 'Credit/Debit Card' }
+                    { id: 'easypaisa', name: 'EasyPaisa Account' }
                   ].map(p => (
                     <button
                       key={p.id}
@@ -578,45 +601,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 </div>
 
                 {['bank_transfer', 'jazzcash', 'easypaisa'].includes(paymentMethod) && (
-                  <div className="p-4 bg-stone-50 dark:bg-zinc-900 border border-stone-200/50 dark:border-zinc-800/80 rounded-xl text-xs space-y-4">
+                  <div className="p-4 bg-stone-50 dark:bg-zinc-900 border border-stone-200/50 dark:border-zinc-800/80 rounded-xl text-xs">
                     <div
                       dangerouslySetInnerHTML={{ __html: PAYMENT_ACCOUNTS[paymentMethod] }}
                       className="text-stone-700 dark:text-stone-300 leading-relaxed"
                     />
-
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-wider text-stone-850 dark:text-stone-200">
-                        Upload Transfer Receipt Screenshot *
-                      </label>
-                      <div className="relative border-2 border-dashed border-stone-200 dark:border-zinc-850 rounded-xl p-6 text-center cursor-pointer hover:bg-stone-100/50 transition-colors">
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={handleFileChange}
-                          className="absolute inset-0 opacity-0 cursor-pointer"
-                        />
-                        <div className="flex flex-col items-center justify-center gap-2">
-                          <Upload size={24} className="text-stone-400" />
-                          <span className="text-xs text-stone-500 font-medium">
-                            {screenshot ? 'Screenshot Loaded ✓' : 'Click or Drag & Drop to Upload'}
-                          </span>
-                        </div>
-                      </div>
-                      {screenshot && (
-                        <div className="relative w-20 h-20 rounded-lg overflow-hidden border border-stone-200 mt-2">
-                          <img src={screenshot} className="w-full h-full object-cover" alt="Receipt preview" />
-                          <button
-                            onClick={() => setScreenshot(null)}
-                            className="absolute inset-0 bg-black/50 text-white text-[10px] font-bold opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center"
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      )}
-                      {errors.screenshot && (
-                        <span className="text-[10px] font-bold text-rose-500">{errors.screenshot}</span>
-                      )}
-                    </div>
                   </div>
                 )}
               </div>
