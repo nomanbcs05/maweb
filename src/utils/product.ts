@@ -102,6 +102,38 @@ export function isProductAvailable(
  * @param variant   A QuantityOption object OR a variant name/label string
  * @returns         The correct price as a number
  */
+export const KG_CATEGORIES = ['Khaaray', 'Biscuits', 'Rusks', 'Sugar Free Biscuits', 'Rusk Cakes', 'Rusk Cake'];
+
+/**
+ * Calculates proportional price for grams given price per KG.
+ * Formula: Math.round((kgPrice / 1000) * grams)
+ */
+export const calculateGramPrice = (kgPrice: number, grams: number): number => {
+  return Math.round((kgPrice / 1000) * grams);
+};
+
+/**
+ * Auto-generates standard 250g, 500g, 1kg variants from base KG price.
+ */
+export const generateKgVariants = (kgPrice: number) => {
+  return [
+    { label: '250g', value: '250g', price: calculateGramPrice(kgPrice, 250) },
+    { label: '500g', value: '500g', price: calculateGramPrice(kgPrice, 500) },
+    { label: '1kg', value: '1kg', price: kgPrice }
+  ];
+};
+
+/**
+ * Checks if a product or category qualifies for KG auto-variant generation.
+ */
+export const isKgCategory = (categoryOrName: string, unit?: string): boolean => {
+  if (unit && unit.toLowerCase() === 'kg') return true;
+  if (!categoryOrName) return false;
+  return KG_CATEGORIES.some(
+    cat => cat.toLowerCase() === categoryOrName.toLowerCase() || categoryOrName.toLowerCase().includes(cat.toLowerCase())
+  );
+};
+
 export function getVariantPrice(
   product: Product | any,
   variant?: QuantityOption | any | string
@@ -135,6 +167,18 @@ export function getVariantPrice(
 
       // FIX BUG 2: exact multiplication — e.g. 600 * 2 = 1200
       return Math.round(base1lbPrice * multiplier);
+    }
+  }
+
+  // STEP 2: KG to Grams Auto calculation for KG items
+  if (isKgCategory(product.category, product.unit) || isKgCategory(product.name, product.unit)) {
+    const gramMatch = variantLabel.match(/^(\d+)\s*g$/i);
+    if (gramMatch) {
+      const grams = parseInt(gramMatch[1], 10);
+      return calculateGramPrice(product.price, grams);
+    }
+    if (/^1\s*kg$/i.test(variantLabel)) {
+      return product.price;
     }
   }
 

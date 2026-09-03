@@ -14,7 +14,7 @@ import { HeroNavbar } from './components/HeroNavbar';
 import { LoadingScreen } from './components/LoadingScreen';
 import type { Product, Order } from './types';
 import { API } from './services/api';
-import { isProductAvailable, getVariantPrice } from './utils/product';
+import { isProductAvailable, getVariantPrice, generateKgVariants, isKgCategory } from './utils/product';
 import {
   Search,
   SlidersHorizontal,
@@ -139,11 +139,15 @@ function App() {
     }
 
     // FIX BUG 1 & FIX BUG 2: Update cart item structure to composite key ${productId}-${variantId}
-    const variantId = selectedOption?.value || selectedOption?.id || product.quantityOptions?.[0]?.value || 'default';
-    const variantName = selectedOption?.label || product.quantityOptions?.[0]?.label || product.unit || 'Standard';
+    const defaultOption = (product.quantityOptions && product.quantityOptions[0]) ||
+      ((isKgCategory(product.category, product.unit) || isKgCategory(product.name, product.unit))
+        ? generateKgVariants(product.price)[0]
+        : undefined);
+    const variantId = selectedOption?.value || selectedOption?.id || defaultOption?.value || 'default';
+    const variantName = selectedOption?.label || defaultOption?.label || product.unit || 'Standard';
     
     // FIX BUG 2: Calculate price dynamically for Cakes lb variants or use variant price
-    const itemPrice = getVariantPrice(product, selectedOption);
+    const itemPrice = getVariantPrice(product, selectedOption || defaultOption);
     const compositeId = `${product.id}-${variantId}`;
 
     const existingIndex = cart.findIndex(

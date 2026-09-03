@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { Product, QuantityOption } from '../types';
 import { X, Plus, Minus, ShoppingBag } from 'lucide-react';
-import { isProductAvailable, getVariantPrice } from '../utils/product';
+import { isProductAvailable, getVariantPrice, generateKgVariants, isKgCategory } from '../utils/product';
 
 interface ProductCustomizerModalProps {
   product: Product | null;
@@ -20,10 +20,17 @@ export const ProductCustomizerModal: React.FC<ProductCustomizerModalProps> = ({
 
   if (!product) return null;
 
+  // STEP 2: Auto-create 250g/500g/1kg variants for KG categories if not manually provided
+  const availableOptions: QuantityOption[] = (product.quantityOptions && product.quantityOptions.length > 0)
+    ? product.quantityOptions
+    : (isKgCategory(product.category, product.unit) || isKgCategory(product.name, product.unit))
+      ? generateKgVariants(product.price)
+      : [];
+
   // FIX BUG 1: Initialize with first available variant
   React.useEffect(() => {
-    if (product.quantityOptions && product.quantityOptions.length > 0) {
-      const firstAvail = product.quantityOptions.find(opt => isProductAvailable(product, opt)) || product.quantityOptions[0];
+    if (availableOptions.length > 0) {
+      const firstAvail = availableOptions.find(opt => isProductAvailable(product, opt)) || availableOptions[0];
       setSelectedOption(firstAvail);
     }
   }, [product]);
@@ -49,7 +56,7 @@ export const ProductCustomizerModal: React.FC<ProductCustomizerModalProps> = ({
         {/* Close Button */}
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 bg-white/80 dark:bg-zinc-950/80 hover:bg-stone-100 dark:hover:bg-zinc-850 rounded-full border border-stone-200/50 dark:border-zinc-800/50 text-stone-600 dark:text-stone-300 transition-colors cursor-pointer"
+          className="absolute top-4 right-4 z-10 p-2 bg-white/80 dark:bg-zinc-950/80 hover:bg-stone-100 dark:hover:bg-zinc-855 rounded-full border border-stone-200/50 dark:border-zinc-800/50 text-stone-600 dark:text-stone-300 transition-colors cursor-pointer"
           aria-label="Close modal"
         >
           <X size={16} />
@@ -78,13 +85,13 @@ export const ProductCustomizerModal: React.FC<ProductCustomizerModalProps> = ({
             </p>
             
             {/* Quantity Options */}
-            {product.quantityOptions && product.quantityOptions.length > 0 && (
+            {availableOptions.length > 0 && (
               <div className="mb-6">
                 <label className="text-xs font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 block mb-2">
                   Size
                 </label>
                 <div className="flex flex-wrap gap-2">
-                  {product.quantityOptions.map((option) => {
+                  {availableOptions.map((option) => {
                     const optAvailable = isProductAvailable(product, option);
                     return (
                       <button
