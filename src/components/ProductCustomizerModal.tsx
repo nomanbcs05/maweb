@@ -6,7 +6,13 @@ import { isProductAvailable, getVariantPrice, generateKgVariants, isKgCategory }
 interface ProductCustomizerModalProps {
   product: Product | null;
   onClose: () => void;
-  onAddToCart: (product: Product, quantity: number, notes: string, selectedOption?: QuantityOption) => void;
+  onAddToCart: (
+    product: Product,
+    quantity: number,
+    notes: string,
+    selectedOption?: QuantityOption,
+    customPrice?: number
+  ) => void;
 }
 
 export const ProductCustomizerModal: React.FC<ProductCustomizerModalProps> = ({
@@ -42,7 +48,7 @@ export const ProductCustomizerModal: React.FC<ProductCustomizerModalProps> = ({
   const currentPrice = getVariantPrice(product, selectedOption);
 
   const handleAdd = () => {
-    onAddToCart(product, quantity, notes, selectedOption);
+    onAddToCart(product, quantity, notes, selectedOption, currentPrice);
     setQuantity(1);
     setNotes('');
     onClose();

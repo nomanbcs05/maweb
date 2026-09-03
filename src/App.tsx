@@ -131,7 +131,13 @@ function App() {
     localStorage.setItem('order_location', locValue);
   };
 
-  const handleAddToCart = (product: Product, quantity: number, notes = '', selectedOption?: any) => {
+  const handleAddToCart = (
+    product: Product,
+    quantity: number,
+    notes = '',
+    selectedOption?: any,
+    customPrice?: number
+  ) => {
     // FIX BUG 1: Check availability before adding, show toast if out of stock
     if (!isProductAvailable(product, selectedOption)) {
       showToast('This item is currently out of stock');
@@ -143,11 +149,17 @@ function App() {
       ((isKgCategory(product.category, product.unit) || isKgCategory(product.name, product.unit))
         ? generateKgVariants(product.price)[0]
         : undefined);
-    const variantId = selectedOption?.value || selectedOption?.id || defaultOption?.value || 'default';
-    const variantName = selectedOption?.label || defaultOption?.label || product.unit || 'Standard';
+    const finalOption = selectedOption || defaultOption;
+    const variantId = finalOption?.value || finalOption?.id || 'default';
+    const variantName = finalOption?.label || product.unit || 'Standard';
     
-    // FIX BUG 2: Calculate price dynamically for Cakes lb variants or use variant price
-    const itemPrice = getVariantPrice(product, selectedOption || defaultOption);
+    // ISSUE 1: Exact price confirmed during product selection is single source of truth
+    const itemPrice = typeof customPrice === 'number' && !isNaN(customPrice)
+      ? customPrice
+      : (typeof finalOption?.price === 'number' && finalOption.price > 0 && product.category !== 'Cakes')
+        ? finalOption.price
+        : getVariantPrice(product, finalOption);
+
     const compositeId = `${product.id}-${variantId}`;
 
     const existingIndex = cart.findIndex(
@@ -157,7 +169,7 @@ function App() {
 
     let newCart = [...cart];
     if (existingIndex > -1) {
-      // FIX BUG 1: If same product + same variant added again, increase qty
+      // If same product + same variant added again, increase qty while preserving unit price
       const existing = newCart[existingIndex];
       const newQty = (existing.qty || existing.quantity) + quantity;
       newCart[existingIndex] = {
@@ -166,28 +178,28 @@ function App() {
         productId: product.id,
         variantId,
         variantName,
-        price: itemPrice,
+        price: itemPrice, // Preserves exact confirmed unit price
         qty: newQty,
         quantity: newQty,
         image: product.image,
         name: product.name,
-        selectedOption: selectedOption || existing.selectedOption
+        selectedOption: finalOption
       };
     } else {
-      // FIX BUG 1: If different variant, add new line item
+      // If new line item, store exact selected quantity, unit price, and variant
       newCart.push({
         id: compositeId,
         productId: product.id,
         variantId,
         variantName,
-        price: itemPrice,
-        qty: quantity,
+        price: itemPrice, // EXACT selected unit price
+        qty: quantity,    // EXACT selected quantity
+        quantity: quantity,
         image: product.image,
         name: product.name,
         product,
-        quantity,
         notes,
-        selectedOption: selectedOption || product.quantityOptions?.[0]
+        selectedOption: finalOption
       });
     }
     saveCart(newCart);
@@ -646,41 +658,62 @@ function App() {
         ) : activeCategory !== 'all' ? (
           // List View (when category selected)
           <div className="space-y-3">
-            {filteredProducts.map((product) => (
-              <div
-                key={product.id}
-                className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 p-4 rounded-2xl border border-[#071326]/10 bg-white transition-all hover:bg-[#f4ead6]/30 hover:shadow-md"
-              >
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-20 h-20 sm:w-24 sm:h-24 object-contain rounded-xl shrink-0 mx-auto sm:mx-0"
-                />
-                <div className="flex-1 w-full text-center sm:text-left">
-                  <h3 className="font-semibold text-[#071326] text-base mb-1">{product.name}</h3>
-                  <p className="text-xs sm:text-sm text-[#071326]/60 mb-2">{product.description}</p>
-                  <p className="text-base sm:text-lg font-bold text-[#C9A227]">Rs. {product.price.toLocaleString()}</p>
-                </div>
-                <button
-                  onClick={() => {
-                    if (product.category === 'Cakes') setCustomizingProduct(product);
-                    else handleAddToCart(product, 1, '');
-                  }}
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-[#071326] text-white font-semibold text-xs sm:text-sm transition-colors hover:bg-[#071326]/90 shrink-0"
+            {filteredProducts.map((product) => {
+              const isAvail = isProductAvailable(product);
+              return (
+                <div
+                  key={product.id}
+                  onClick={() => setCustomizingProduct(product)}
+                  className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 p-4 rounded-2xl border border-[#071326]/10 bg-white transition-all hover:bg-[#f4ead6]/30 hover:shadow-md cursor-pointer"
+                  title="Click to customize details"
                 >
-                  Add to Cart
-                </button>
-              </div>
-            ))}
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-20 h-20 sm:w-24 sm:h-24 object-contain rounded-xl shrink-0 mx-auto sm:mx-0"
+                  />
+                  <div className="flex-1 w-full text-center sm:text-left">
+                    <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-start mb-1">
+                      <h3 className="font-semibold text-[#071326] text-base">{product.name}</h3>
+                      {!isAvail && (
+                        <span className="bg-rose-100 text-rose-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">
+                          Out of Stock
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs sm:text-sm text-[#071326]/60 mb-2">{product.description}</p>
+                    <p className="text-base sm:text-lg font-bold text-[#C9A227]">Rs. {product.price.toLocaleString()}</p>
+                  </div>
+                  <button
+                    disabled={!isAvail}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (!isAvail) return;
+                      if (product.category === 'Cakes' || (product.quantityOptions && product.quantityOptions.length > 1) || isKgCategory(product.category, product.unit)) {
+                        setCustomizingProduct(product);
+                      } else {
+                        handleAddToCart(product, 1, '', undefined, product.price);
+                      }
+                    }}
+                    className={`w-full sm:w-auto px-5 py-2.5 rounded-lg font-semibold text-xs sm:text-sm transition-colors shrink-0 ${
+                      isAvail
+                        ? 'bg-[#071326] text-white hover:bg-[#071326]/90 cursor-pointer'
+                        : 'bg-stone-300 text-stone-500 cursor-not-allowed opacity-60'
+                    }`}
+                  >
+                    {!isAvail ? 'Out of Stock' : (product.category === 'Cakes' || (product.quantityOptions && product.quantityOptions.length > 1)) ? 'Customize' : 'Add to Cart'}
+                  </button>
+                </div>
+              );
+            })}
           </div>
         ) : (
           // Grid View (default)
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product}
-                onAddToCart={(prod, qty, notes) => {
-                  if (prod.category === 'Cakes') setCustomizingProduct(prod);
-                  else handleAddToCart(prod, qty, notes || '');
+                onAddToCart={(prod, qty, notes, option, price) => {
+                  handleAddToCart(prod, qty, notes || '', option, price);
                 }}
                 onQuickView={setCustomizingProduct}
               />

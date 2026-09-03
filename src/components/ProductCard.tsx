@@ -4,7 +4,13 @@ import { isProductAvailable, getVariantPrice, generateKgVariants, isKgCategory }
 
 interface ProductCardProps {
   product: Product;
-  onAddToCart: (product: Product, quantity: number, notes?: string, selectedOption?: QuantityOption) => void;
+  onAddToCart: (
+    product: Product,
+    quantity: number,
+    notes?: string,
+    selectedOption?: QuantityOption,
+    customPrice?: number
+  ) => void;
   onQuickView: (product: Product) => void;
 }
 
@@ -36,7 +42,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     <div className="group bg-white rounded-none overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full border-0 relative">
       
       {/* Product Image Panel */}
-      <div className="relative aspect-[3/4] overflow-hidden bg-white">
+      <div 
+        onClick={() => onQuickView(product)}
+        className="relative aspect-[3/4] overflow-hidden bg-white cursor-pointer"
+        title="Click to view details & customize"
+      >
         <img 
           src={product.image} 
           alt={product.name} 
@@ -53,7 +63,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
       {/* Info Body */}
       <div className="p-4 flex flex-col flex-1 text-center">
-        <h3 className="text-lg font-semibold text-stone-800 mb-2 leading-tight">
+        <h3 
+          onClick={() => onQuickView(product)}
+          className="text-lg font-semibold text-stone-800 mb-2 leading-tight cursor-pointer hover:text-rose-700 transition-colors"
+          title="Click to customize"
+        >
           {product.name}
         </h3>
         
@@ -93,7 +107,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* Add Button */}
         {/* FIX BUG 1: Disable and mark Out of Stock if not available */}
         <button 
-          onClick={() => isAvailable && (isCake ? onQuickView(product) : onAddToCart(product, 1, '', selectedOption))}
+          onClick={() => isAvailable && (isCake ? onQuickView(product) : onAddToCart(product, 1, '', selectedOption, displayPrice))}
           disabled={!isAvailable}
           className={`w-full py-3 font-bold uppercase tracking-wider rounded-full transition-all cursor-pointer ${
             isAvailable 

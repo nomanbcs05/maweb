@@ -112,27 +112,27 @@ const staticProducts: Product[] = [
     { label: '30 PC', value: '30pc', price: 850 }
   ], image: '/images/products/frozen-items/plain-paratha-30.png', gallery: [], featured: false, best_seller: false, new_arrival: true, available: true, stock_quantity: 25, minimum_order: 1, preparation_time: 'N/A', tags: ['Frozen', 'Paratha', 'Family Pack'], ingredients: ['Flour', 'Water', 'Salt', 'Ghee'], allergens: ['Gluten', 'Dairy'] },
   { id: 'frozen3', name: 'Malai Boti Samosa 12PC', slug: 'malai-boti-samosa-12pc', category: 'Frozen Items', description: 'Frozen malai boti samosa - 12 pcs.', price: 500, unit: 'Packet', quantityOptions: [
-    { label: '12 PC', value: '12pc', price: 500 }
-  ], image: '/images/products/frozen-items/molai-boti-samosa.png', gallery: [], featured: true, best_seller: true, new_arrival: true, available: false, stock_quantity: 30, minimum_order: 1, preparation_time: 'N/A', tags: ['Frozen', 'Samosa', 'Molai Boti'], ingredients: ['Flour', 'Chicken', 'Spices', 'Ghee'], allergens: ['Gluten', 'Dairy'] },
+    { label: '12 PC', value: '12pc', price: 500, stock: 0, out_of_stock: true }
+  ], image: '/images/products/frozen-items/molai-boti-samosa.png', gallery: [], featured: true, best_seller: true, new_arrival: true, available: false, out_of_stock: true, stock: 0, stock_quantity: 0, minimum_order: 1, preparation_time: 'N/A', tags: ['Frozen', 'Samosa', 'Molai Boti'], ingredients: ['Flour', 'Chicken', 'Spices', 'Ghee'], allergens: ['Gluten', 'Dairy'] },
   { id: 'frozen4', name: 'Tikka Samosa 12PC', slug: 'tikka-samosa-12pc', category: 'Frozen Items', description: 'Frozen tikka samosa - 12 pcs.', price: 500, unit: 'Packet', quantityOptions: [
-    { label: '12 PC', value: '12pc', price: 500 }
-  ], image: '/images/products/frozen-items/tikka-samosa.png', gallery: [], featured: false, best_seller: true, new_arrival: false, available: false, stock_quantity: 30, minimum_order: 1, preparation_time: 'N/A', tags: ['Frozen', 'Samosa', 'Tikka'], ingredients: ['Flour', 'Chicken', 'Tikka Spices', 'Ghee'], allergens: ['Gluten', 'Dairy'] },
+    { label: '12 PC', value: '12pc', price: 500, stock: 0, out_of_stock: true }
+  ], image: '/images/products/frozen-items/tikka-samosa.png', gallery: [], featured: false, best_seller: true, new_arrival: false, available: false, out_of_stock: true, stock: 0, stock_quantity: 0, minimum_order: 1, preparation_time: 'N/A', tags: ['Frozen', 'Samosa', 'Tikka'], ingredients: ['Flour', 'Chicken', 'Tikka Spices', 'Ghee'], allergens: ['Gluten', 'Dairy'] },
   { id: 'frozen5', name: 'Chicken Pocket 6PC', slug: 'chicken-pocket-6pc', category: 'Frozen Items', description: 'Frozen chicken pocket - 6 pcs.', price: 300, unit: 'Packet', quantityOptions: [
-    { label: '6 PC', value: '6pc', price: 300 }
-  ], image: '/images/products/frozen-items/chicken-samosa.png', gallery: [], featured: false, best_seller: false, new_arrival: true, available: true, stock_quantity: 30, minimum_order: 1, preparation_time: 'N/A', tags: ['Frozen', 'Chicken Pocket'], ingredients: ['Flour', 'Chicken', 'Spices', 'Ghee'], allergens: ['Gluten', 'Dairy'] },
+    { label: '6 PC', value: '6pc', price: 300, stock: 0, out_of_stock: true }
+  ], image: '/images/products/frozen-items/chicken-samosa.png', gallery: [], featured: false, best_seller: false, new_arrival: true, available: false, out_of_stock: true, stock: 0, stock_quantity: 0, minimum_order: 1, preparation_time: 'N/A', tags: ['Frozen', 'Chicken Pocket'], ingredients: ['Flour', 'Chicken', 'Spices', 'Ghee'], allergens: ['Gluten', 'Dairy'] },
   { id: 'frozen6', name: 'Chinese Roll 6PC', slug: 'chinese-roll-6pc', category: 'Frozen Items', description: 'Frozen chinese roll - 6 pcs.', price: 300, unit: 'Packet', quantityOptions: [
-    { label: '6 PC', value: '6pc', price: 300 }
-  ], image: '/images/products/frozen-items/chinese-roll.png', gallery: [], featured: false, best_seller: true, new_arrival: false, available: false, stock_quantity: 30, minimum_order: 1, preparation_time: 'N/A', tags: ['Frozen', 'Chinese Roll', 'Snacks'], ingredients: ['Flour', 'Chicken', 'Vegetables', 'Spices', 'Ghee'], allergens: ['Gluten', 'Dairy'] },
+    { label: '6 PC', value: '6pc', price: 300, stock: 0, out_of_stock: true }
+  ], image: '/images/products/frozen-items/chinese-roll.png', gallery: [], featured: false, best_seller: true, new_arrival: false, available: false, out_of_stock: true, stock: 0, stock_quantity: 0, minimum_order: 1, preparation_time: 'N/A', tags: ['Frozen', 'Chinese Roll', 'Snacks'], ingredients: ['Flour', 'Chicken', 'Vegetables', 'Spices', 'Ghee'], allergens: ['Gluten', 'Dairy'] },
   { id: 'frozen7', name: 'Macroni Samosa 12PC', slug: 'macroni-samosa-12pc', category: 'Frozen Items', description: 'Frozen macroni samosa - 12 pcs.', price: 300, unit: 'Packet', quantityOptions: [
-    { label: '12 PC', value: '12pc', price: 300 }
-  ], image: '/images/products/frozen-items/macroni-samosa.png', gallery: [], featured: true, best_seller: false, new_arrival: true, available: false, stock_quantity: 30, minimum_order: 1, preparation_time: 'N/A', tags: ['Frozen', 'Samosa', 'Macroni'], ingredients: ['Flour', 'Macaroni', 'Spices', 'Ghee'], allergens: ['Gluten', 'Dairy'] },
+    { label: '12 PC', value: '12pc', price: 300, stock: 0, out_of_stock: true }
+  ], image: '/images/products/frozen-items/macroni-samosa.png', gallery: [], featured: true, best_seller: false, new_arrival: true, available: false, out_of_stock: true, stock: 0, stock_quantity: 0, minimum_order: 1, preparation_time: 'N/A', tags: ['Frozen', 'Samosa', 'Macroni'], ingredients: ['Flour', 'Macaroni', 'Spices', 'Ghee'], allergens: ['Gluten', 'Dairy'] },
 ];
 
 export const API = {
-  // FIX: Bug 1: Product listing API filters out out-of-stock products
+  // Returns all catalog products including stock status
   async getProducts(): Promise<Product[]> {
-    console.log('📦 Using static product data with availability filter');
-    return staticProducts.filter(p => isProductAvailable(p));
+    console.log('📦 Using static product data');
+    return staticProducts;
   },
 
   async getAllProductsRaw(): Promise<Product[]> {

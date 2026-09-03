@@ -299,6 +299,7 @@ export const menuProducts: MenuProduct[] = [
     image: '/images/products/frozen-items/molai-boti-samosa.png',
     featured: true,
     best_seller: true,
+    available: false,
     tags: ['Frozen', 'Samosa', 'Malai Boti'],
     quantityOptions: [{ label: '12 PC', value: '12pc', price: 500 }]
   },
@@ -312,6 +313,7 @@ export const menuProducts: MenuProduct[] = [
     image: '/images/products/frozen-items/tikka-samosa.png',
     featured: false,
     best_seller: true,
+    available: false,
     tags: ['Frozen', 'Samosa', 'Tikka'],
     quantityOptions: [{ label: '12 PC', value: '12pc', price: 500 }]
   },
@@ -325,6 +327,7 @@ export const menuProducts: MenuProduct[] = [
     image: '/images/products/frozen-items/chicken-samosa.png',
     featured: false,
     best_seller: false,
+    available: false,
     tags: ['Frozen', 'Chicken Pocket'],
     quantityOptions: [{ label: '6 PC', value: '6pc', price: 300 }]
   },
@@ -338,6 +341,7 @@ export const menuProducts: MenuProduct[] = [
     image: '/images/products/frozen-items/chinese-roll.png',
     featured: true,
     best_seller: true,
+    available: false,
     tags: ['Frozen', 'Chinese Roll'],
     quantityOptions: [{ label: '6 PC', value: '6pc', price: 300 }]
   },
@@ -351,6 +355,7 @@ export const menuProducts: MenuProduct[] = [
     image: '/images/products/frozen-items/macroni-samosa.png',
     featured: true,
     best_seller: false,
+    available: false,
     tags: ['Frozen', 'Macroni Samosa'],
     quantityOptions: [{ label: '12 PC', value: '12pc', price: 300 }]
   },

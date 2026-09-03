@@ -46,11 +46,11 @@ export const menuProducts = [
   // M.A FROZEN ITEMS
   { name: 'Plain Paratha 5PC', slug: 'plain-paratha-5pc', category: 'Frozen Items', description: 'Flaky, layered traditional flatbreads - 5 pcs pack.', price: 180, unit: 'Packet', image: '/images/products/frozen-items/plain-paratha.png' },
   { name: 'Plain Paratha 30PC', slug: 'plain-paratha-30pc', category: 'Frozen Items', description: 'Bulk pack of flaky, layered flatbreads - 30 pcs.', price: 850, unit: 'Packet', image: '/images/products/frozen-items/plain-paratha-30.png' },
-  { name: 'Malai Boti Samosa 12PC', slug: 'malai-boti-samosa-12pc', category: 'Frozen Items', description: 'Crisp samosas stuffed with chicken malai boti - 12 pcs.', price: 500, unit: 'Packet', image: '/images/products/frozen-items/molai-boti-samosa.png' },
-  { name: 'Tikka Samosa 12PC', slug: 'tikka-samosa-12pc', category: 'Frozen Items', description: 'Samosas filled with spicy chicken tikka - 12 pcs.', price: 500, unit: 'Packet', image: '/images/products/frozen-items/tikka-samosa.png' },
-  { name: 'Chicken Pocket 6PC', slug: 'chicken-pocket-6pc', category: 'Frozen Items', description: 'Savory pastry pockets with spiced chicken - 6 pcs.', price: 300, unit: 'Packet', image: '/images/products/frozen-items/chicken-samosa.png' },
-  { name: 'Chinese Roll 6PC', slug: 'chinese-roll-6pc', category: 'Frozen Items', description: 'Golden rolls packed with vegetables & chicken - 6 pcs.', price: 300, unit: 'Packet', image: '/images/products/frozen-items/chinese-roll.png' },
-  { name: 'Macroni Samosa 12PC', slug: 'macroni-samosa-12pc', category: 'Frozen Items', description: 'Unique fusion samosa stuffed with spicy macaroni - 12 pcs.', price: 300, unit: 'Packet', image: '/images/products/frozen-items/macroni-samosa.png' },
+  { name: 'Malai Boti Samosa 12PC', slug: 'malai-boti-samosa-12pc', category: 'Frozen Items', description: 'Crisp samosas stuffed with chicken malai boti - 12 pcs.', price: 500, unit: 'Packet', available: false, image: '/images/products/frozen-items/molai-boti-samosa.png' },
+  { name: 'Tikka Samosa 12PC', slug: 'tikka-samosa-12pc', category: 'Frozen Items', description: 'Samosas filled with spicy chicken tikka - 12 pcs.', price: 500, unit: 'Packet', available: false, image: '/images/products/frozen-items/tikka-samosa.png' },
+  { name: 'Chicken Pocket 6PC', slug: 'chicken-pocket-6pc', category: 'Frozen Items', description: 'Savory pastry pockets with spiced chicken - 6 pcs.', price: 300, unit: 'Packet', available: false, image: '/images/products/frozen-items/chicken-samosa.png' },
+  { name: 'Chinese Roll 6PC', slug: 'chinese-roll-6pc', category: 'Frozen Items', description: 'Golden rolls packed with vegetables & chicken - 6 pcs.', price: 300, unit: 'Packet', available: false, image: '/images/products/frozen-items/chinese-roll.png' },
+  { name: 'Macroni Samosa 12PC', slug: 'macroni-samosa-12pc', category: 'Frozen Items', description: 'Unique fusion samosa stuffed with spicy macaroni - 12 pcs.', price: 300, unit: 'Packet', available: false, image: '/images/products/frozen-items/macroni-samosa.png' },
 
   // CUPCAKES & BREADS
   { name: 'Cupcakes', slug: 'cupcakes', category: 'Cupcakes & Breads', description: 'Freshly baked cupcakes with delicious swirl frosting.', price: 50, unit: 'Piece', image: '/images/products/breads/cupcakes.png' },

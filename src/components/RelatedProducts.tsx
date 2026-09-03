@@ -6,7 +6,13 @@ import { isProductAvailable } from '../utils/product';
 interface RelatedProductsProps {
   currentProduct: Product;
   allProducts: Product[];
-  onAddToCart: (product: Product, quantity: number, notes?: string, selectedOption?: QuantityOption) => void;
+  onAddToCart: (
+    product: Product,
+    quantity: number,
+    notes?: string,
+    selectedOption?: QuantityOption,
+    customPrice?: number
+  ) => void;
   onQuickView: (product: Product) => void;
 }
 
