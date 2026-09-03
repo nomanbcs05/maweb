@@ -14,6 +14,7 @@ import { HeroNavbar } from './components/HeroNavbar';
 import { LoadingScreen } from './components/LoadingScreen';
 import type { Product, Order } from './types';
 import { API } from './services/api';
+import { isProductAvailable, getVariantPrice } from './utils/product';
 import {
   Search,
   SlidersHorizontal,
@@ -46,6 +47,24 @@ function App() {
   const [isOrderTypeModalOpen, setIsOrderTypeModalOpen] = useState(false);
   const [, setSelectedLocation] = useState<string>('');
 
+  // FIX: Bug 1 & Bug 2: Toast notification state
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+  };
+
+  useEffect(() => {
+    if (toastMessage) {
+      const timer = setTimeout(() => setToastMessage(null), 3500);
+      return () => clearTimeout(timer);
+    }
+  }, [toastMessage]);
+
+  useEffect(() => {
+    (window as any).showToast = (msg: string) => showToast(msg);
+  }, []);
+
   // Contact form state
   const [contactName, setContactName] = useState('');
   const [contactEmail, setContactEmail] = useState('');
@@ -56,7 +75,23 @@ function App() {
     fetchData();
     const savedCart = localStorage.getItem('mab_cart_react');
     if (savedCart) {
-      try { setCart(JSON.parse(savedCart)) } catch {}
+      try {
+        const parsed = JSON.parse(savedCart);
+        if (Array.isArray(parsed)) {
+          // FIX BUG 1: Migration - if old cart items don't have variantId, remove them and show "Please re-add items to cart"
+          const hadOldItemsWithoutVariant = parsed.some(item => !item.variantId);
+          const validItems = parsed.filter(item => Boolean(item.variantId && item.id));
+
+          if (hadOldItemsWithoutVariant) {
+            showToast('Please re-add items to cart');
+            saveCart(validItems);
+          } else {
+            setCart(validItems);
+          }
+        }
+      } catch (e) {
+        console.error('Failed to parse cart:', e);
+      }
     }
     const savedLocation = localStorage.getItem('order_location');
     if (savedLocation) {
@@ -97,44 +132,98 @@ function App() {
   };
 
   const handleAddToCart = (product: Product, quantity: number, notes = '', selectedOption?: any) => {
-    const existing = cart.find(
-      i => i.product.id === product.id && 
-           i.notes === notes && 
-           i.selectedOption?.value === selectedOption?.value
+    // FIX BUG 1: Check availability before adding, show toast if out of stock
+    if (!isProductAvailable(product, selectedOption)) {
+      showToast('This item is currently out of stock');
+      return;
+    }
+
+    // FIX BUG 1 & FIX BUG 2: Update cart item structure to composite key ${productId}-${variantId}
+    const variantId = selectedOption?.value || selectedOption?.id || product.quantityOptions?.[0]?.value || 'default';
+    const variantName = selectedOption?.label || product.quantityOptions?.[0]?.label || product.unit || 'Standard';
+    
+    // FIX BUG 2: Calculate price dynamically for Cakes lb variants or use variant price
+    const itemPrice = getVariantPrice(product, selectedOption);
+    const compositeId = `${product.id}-${variantId}`;
+
+    const existingIndex = cart.findIndex(
+      i => (i.id === compositeId || (i.productId === product.id && i.variantId === variantId) || (i.product.id === product.id && i.selectedOption?.value === variantId)) &&
+           i.notes === notes
     );
+
     let newCart = [...cart];
-    if (existing) {
-      existing.quantity += quantity;
+    if (existingIndex > -1) {
+      // FIX BUG 1: If same product + same variant added again, increase qty
+      const existing = newCart[existingIndex];
+      const newQty = (existing.qty || existing.quantity) + quantity;
+      newCart[existingIndex] = {
+        ...existing,
+        id: compositeId,
+        productId: product.id,
+        variantId,
+        variantName,
+        price: itemPrice,
+        qty: newQty,
+        quantity: newQty,
+        image: product.image,
+        name: product.name,
+        selectedOption: selectedOption || existing.selectedOption
+      };
     } else {
-      newCart.push({ product, quantity, notes, selectedOption });
+      // FIX BUG 1: If different variant, add new line item
+      newCart.push({
+        id: compositeId,
+        productId: product.id,
+        variantId,
+        variantName,
+        price: itemPrice,
+        qty: quantity,
+        image: product.image,
+        name: product.name,
+        product,
+        quantity,
+        notes,
+        selectedOption: selectedOption || product.quantityOptions?.[0]
+      });
     }
     saveCart(newCart);
     setIsCartOpen(true);
   };
 
-  const handleUpdateQty = (productId: string, delta: number, optionValue?: string) => {
+  const handleUpdateQty = (targetId: string, delta: number, optionValue?: string) => {
+    // FIX: Bug 2: Use composite id as key with fallback for backward compatibility
     const newCart = cart.map(item => {
-      if (item.product.id === productId && item.selectedOption?.value === optionValue) {
-        const next = item.quantity + delta;
-        return next > 0 ? { ...item, quantity: next } : null;
+      const isTarget = item.id === targetId ||
+        (item.productId === targetId && item.variantId === optionValue) ||
+        (item.product.id === targetId && item.selectedOption?.value === optionValue);
+
+      if (isTarget) {
+        const next = (item.qty || item.quantity) + delta;
+        return next > 0 ? { ...item, qty: next, quantity: next } : null;
       }
       return item;
     }).filter(Boolean) as CartItem[];
     saveCart(newCart);
   };
 
-  const handleUpdateNotes = (productId: string, notes: string, optionValue?: string) => {
-    saveCart(cart.map(i => 
-      i.product.id === productId && i.selectedOption?.value === optionValue 
-        ? { ...i, notes } 
-        : i
-    ));
+  const handleUpdateNotes = (targetId: string, notes: string, optionValue?: string) => {
+    // FIX: Bug 2: Use composite id as key with fallback
+    saveCart(cart.map(i => {
+      const isTarget = i.id === targetId ||
+        (i.productId === targetId && i.variantId === optionValue) ||
+        (i.product.id === targetId && i.selectedOption?.value === optionValue);
+      return isTarget ? { ...i, notes } : i;
+    }));
   };
 
-  const handleRemove = (productId: string, optionValue?: string) => {
-    saveCart(cart.filter(
-      i => !(i.product.id === productId && i.selectedOption?.value === optionValue)
-    ));
+  const handleRemove = (targetId: string, optionValue?: string) => {
+    // FIX: Bug 2: Use composite id as key with fallback
+    saveCart(cart.filter(i => {
+      const isTarget = i.id === targetId ||
+        (i.productId === targetId && i.variantId === optionValue) ||
+        (i.product.id === targetId && i.selectedOption?.value === optionValue);
+      return !isTarget;
+    }));
   };
 
   const scrollToCatalog = () => {
@@ -144,8 +233,10 @@ function App() {
     }
   };
 
+  // FIX: Bug 1: Filter out-of-stock products globally in search and category view
   const filteredProducts = products.filter(p => {
-    // Still show unavailable items but mark them as not available
+    if (!isProductAvailable(p)) return false;
+
     const searchLower = search.toLowerCase().trim();
     
     // Search across multiple product fields
@@ -168,7 +259,8 @@ function App() {
     return matchSearch && matchCat && matchBest && matchNew;
   });
 
-  const featuredProducts = products.filter(p => p.featured);
+  // FIX: Bug 1: Apply isProductAvailable filter in homepage "featured"
+  const featuredProducts = products.filter(p => p.featured && isProductAvailable(p));
 
   const handleHeroCategorySelect = (categoryName: string) => {
     setSearch('');
@@ -194,6 +286,14 @@ function App() {
       {!isLoading && (
         <div className="min-h-screen bg-white text-[#071326] transition-colors duration-300 overflow-x-hidden w-full max-w-full relative">
 
+          {/* FIX: Bug 1 & Bug 2: Global Toast Notification Banner */}
+          {toastMessage && (
+            <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[100] bg-stone-900/95 text-white px-5 py-3 rounded-full shadow-2xl flex items-center gap-2.5 text-xs sm:text-sm font-semibold border border-amber-500/40 backdrop-blur-md transition-all">
+              <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+              <span>{toastMessage}</span>
+            </div>
+          )}
+
           {/* Floating WhatsApp Button */}
           <a 
             href="https://wa.me/03297040402" 
@@ -214,7 +314,7 @@ function App() {
             onSelectCategory={handleHeroCategorySelect}
             products={products}
             onOpenCart={() => setIsCartOpen(true)}
-            cartCount={cart.reduce((sum, item) => sum + item.quantity, 0)}
+            cartCount={cart.reduce((sum, item) => sum + (item.qty || item.quantity), 0)}
           />
           <HeroSlider />
 
@@ -329,8 +429,9 @@ function App() {
         };
 
                 return orderedCategories.map((category, index) => {
+                  // FIX: Bug 1: Hide out of stock products in category sections
                   const categoryProducts = products.filter(p => 
-                    p.category === category.name
+                    p.category === category.name && isProductAvailable(p)
                   );
                   
                   if (categoryProducts.length === 0) return null;

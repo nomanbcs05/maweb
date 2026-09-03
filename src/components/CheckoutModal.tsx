@@ -4,7 +4,8 @@ import type { CartItem } from './CartDrawer';
 import type { Order } from '../types';
 import { API } from '../services/api';
 import { GST_RATE, DELIVERY_FEE } from '../config/pricing';
-import { branchesData, parseOrderLocation, getAreasForBranch } from '../config/branches';
+import { branchesData, parseOrderLocation } from '../config/branches';
+import { getVariantPrice } from '../utils/product';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -118,10 +119,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const availableAreas = useMemo(
-    () => getAreasForBranch(selectedBranchId),
-    [selectedBranchId]
-  );
+  // FIX: Bug 3: Locations state with loading and error
+  const [locations, setLocations] = useState<{ id: string; name: string; branch_id?: string; isActive?: boolean }[]>([]);
+  const [locationsLoading, setLocationsLoading] = useState(false);
+  const [locationsError, setLocationsError] = useState<string | null>(null);
 
   const activeSteps = useMemo(
     () => getActiveSteps(deliveryType, skipMethodStep),
@@ -155,6 +156,39 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
       setPickupBranch(savedLocation);
     }
 
+    // FIX: Bug 3: In Checkout component, on mount call fetchLocations() and set state with loading + error state
+    let isMounted = true;
+    const fetchLocations = async () => {
+      setLocationsLoading(true);
+      setLocationsError(null);
+      try {
+        const data = await API.getLocations();
+        if (isMounted) {
+          setLocations(data);
+          if (savedLocation) {
+            const parsed = parseOrderLocation(savedLocation);
+            const matchingLoc = data.find(l => l.name === parsed.area || l.name === savedLocation);
+            if (matchingLoc) {
+              setArea(matchingLoc.name);
+            }
+          } else if (data.length > 0 && !area) {
+            setArea(data[0].name);
+          }
+        }
+      } catch (err: any) {
+        if (isMounted) {
+          console.error('Error fetching locations:', err);
+          setLocationsError('Failed to load delivery areas');
+        }
+      } finally {
+        if (isMounted) {
+          setLocationsLoading(false);
+        }
+      }
+    };
+
+    fetchLocations();
+
     API.getSavedCustomer().then(c => {
       if (c) {
         setName(c.name || '');
@@ -166,11 +200,18 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
     const today = new Date().toISOString().split('T')[0];
     setScheduledDate(today);
+
+    return () => { isMounted = false; };
   }, [isOpen]);
 
   if (!isOpen) return null;
 
-  const subtotal = cartItems.reduce((s, i) => s + i.product.price * i.quantity, 0);
+  // FIX BUG 1 & FIX BUG 2: Calculate subtotal using cart item price (computed via getVariantPrice) and quantity
+  const subtotal = cartItems.reduce((s, i) => {
+    const itemPrice = i.price ?? getVariantPrice(i.product, i.variantName || i.selectedOption);
+    const qty = i.qty ?? i.quantity;
+    return s + itemPrice * qty;
+  }, 0);
   const tax = subtotal * GST_RATE;
 
   let deliveryCharges = 0;
@@ -277,13 +318,22 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
       },
       couponCode: couponCode || null,
       paymentScreenshot: screenshot,
-      items: cartItems.map(item => ({
-        id: item.product.id,
-        name: item.product.name,
-        qty: item.quantity,
-        price: item.product.price,
-        notes: item.notes
-      }))
+      // FIX BUG 1 & FIX BUG 2: Send composite id, variant details, and accurate price
+      items: cartItems.map(item => {
+        const itemPrice = item.price ?? getVariantPrice(item.product, item.variantName || item.selectedOption);
+        const qty = item.qty ?? item.quantity;
+        const variantText = item.variantName || item.selectedOption?.label;
+        return {
+          id: item.id || `${item.productId || item.product.id}-${item.variantId || 'default'}`,
+          productId: item.productId || item.product.id,
+          variantId: item.variantId,
+          variantName: variantText,
+          name: `${item.name || item.product.name}${variantText ? ` (${variantText})` : ''}`,
+          qty,
+          price: itemPrice,
+          notes: item.notes
+        };
+      })
     };
 
     try {
@@ -454,18 +504,31 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                       <select
                         value={area}
                         onChange={e => setArea(e.target.value)}
+                        disabled={locationsLoading}
                         className={`p-3 text-sm border rounded-xl bg-stone-50 dark:bg-zinc-900 text-stone-900 dark:text-white outline-none ${
                           errors.area ? 'border-rose-500' : 'border-stone-200 dark:border-zinc-800'
                         }`}
                       >
-                        {availableAreas.length === 0 ? (
-                          <option value={area}>{area || 'Select area'}</option>
+                        {/* FIX: Bug 3: Area dropdown mapped over locations state with loading state & fallback */}
+                        {locationsLoading ? (
+                          <option value="">Loading delivery areas...</option>
+                        ) : locations.length === 0 ? (
+                          <option value="">No delivery areas available</option>
                         ) : (
-                          availableAreas.map(loc => (
-                            <option key={loc} value={loc}>{loc}</option>
-                          ))
+                          <>
+                            <option value="">Select delivery area</option>
+                            {(selectedBranchId
+                              ? locations.filter(l => !l.branch_id || l.branch_id === selectedBranchId)
+                              : locations
+                            ).map(loc => (
+                              <option key={loc.id || loc.name} value={loc.name}>
+                                {loc.name}
+                              </option>
+                            ))}
+                          </>
                         )}
                       </select>
+                      {locationsError && <span className="text-[10px] font-bold text-rose-500">{locationsError}</span>}
                       {errors.area && <span className="text-[10px] font-bold text-rose-500">{errors.area}</span>}
                     </div>
                   </div>
@@ -683,17 +746,31 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             </h3>
 
             <div className="space-y-3 max-h-[220px] overflow-y-auto mb-6 pr-1">
-              {cartItems.map(it => (
-                <div key={it.product.id} className="flex justify-between items-start text-xs">
-                  <div className="text-stone-500 max-w-[180px]">
-                    <span className="font-bold text-stone-900 dark:text-white mr-1.5">{it.quantity}x</span>
-                    {it.product.name}
+              {/* FIX BUG 1 & FIX BUG 2: Display name + variantName e.g. "2LB" and calculate price with getVariantPrice */}
+              {cartItems.map((it, idx) => {
+                const itemPrice = it.price ?? getVariantPrice(it.product, it.variantName || it.selectedOption);
+                const qty = it.qty ?? it.quantity;
+                const variantText = it.variantName || it.selectedOption?.label;
+                const itemId = it.id || `${it.productId || it.product.id}-${it.variantId || 'default'}-${idx}`;
+
+                return (
+                  <div key={itemId} className="flex justify-between items-start text-xs">
+                    <div className="text-stone-500 max-w-[180px]">
+                      <span className="font-bold text-stone-900 dark:text-white mr-1.5">{qty}x</span>
+                      {/* FIX BUG 1: In Checkout Page, render name + variantName */}
+                      <span className="text-stone-800 dark:text-stone-200">{it.name || it.product.name}</span>
+                      {variantText && (
+                        <span className="ml-1 text-[11px] font-semibold text-amber-600 dark:text-amber-500">
+                          ({variantText})
+                        </span>
+                      )}
+                    </div>
+                    <span className="font-bold text-stone-900 dark:text-white">
+                      Rs. {(itemPrice * qty).toFixed(0)}
+                    </span>
                   </div>
-                  <span className="font-bold text-stone-900 dark:text-white">
-                    Rs. {(it.product.price * it.quantity).toFixed(0)}
-                  </span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

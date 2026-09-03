@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { Product, QuantityOption } from '../types';
+import { isProductAvailable, getVariantPrice } from '../utils/product';
 
 interface ProductCardProps {
   product: Product;
@@ -13,9 +14,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onQuickView,
 }) => {
   const isCake = product.category === 'Cakes';
-  const [selectedOption, setSelectedOption] = useState<QuantityOption>(product.quantityOptions[0]);
+  // FIX BUG 1: Default to first available option or first option
+  const initialOption = product.quantityOptions.find(opt => isProductAvailable(product, opt)) || product.quantityOptions[0];
+  const [selectedOption, setSelectedOption] = useState<QuantityOption>(initialOption);
   
-  const minPrice = Math.min(...product.quantityOptions.map(opt => opt.price));
+  // FIX BUG 1: Check if product and currently selected option are available
+  const isAvailable = isProductAvailable(product, selectedOption);
+
+  // FIX BUG 2: Use getVariantPrice to get the correct price (auto-calculates lb-based cakes)
+  const displayPrice = getVariantPrice(product, selectedOption);
   
   return (
     <div className="group bg-white rounded-none overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full border-0 relative">
@@ -28,9 +35,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />
-        {!product.available && (
+        {/* FIX BUG 1: Out of stock badge if product or option is not available */}
+        {!isAvailable && (
           <div className="absolute top-2 right-2 bg-rose-700 text-white px-2 py-1 rounded text-xs font-semibold uppercase">
-            Not Available
+            Out of Stock
           </div>
         )}
       </div>
@@ -41,9 +49,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {product.name}
         </h3>
         
-        {/* Price */}
+        {/* FIX BUG 1 & BUG 2: Price uses getVariantPrice (variant price for non-cakes, dynamic lb calc for cakes) */}
         <p className="text-base font-bold text-rose-700 mb-3">
-          Rs. {selectedOption ? selectedOption.price : minPrice}
+          Rs. {displayPrice}
         </p>
         
         <p className="text-xs text-stone-500 line-clamp-2 mb-4 flex-1 leading-relaxed">
@@ -52,33 +60,38 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Quantity Options */}
         <div className="flex gap-2 mb-4 flex-wrap justify-center">
-          {product.quantityOptions.map((option) => (
-            <button
-              key={option.value}
-              onClick={() => product.available && setSelectedOption(option)}
-              disabled={!product.available}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-full border transition-all ${
-                selectedOption.value === option.value
-                  ? 'bg-rose-700 text-white border-rose-700'
-                  : 'bg-white text-rose-700 border-rose-300 hover:border-rose-500'
-              } ${!product.available ? 'cursor-not-allowed opacity-50' : ''}`}
-            >
-              {option.label}
-            </button>
-          ))}
+          {product.quantityOptions.map((option) => {
+            const optAvailable = isProductAvailable(product, option);
+            return (
+              <button
+                key={option.value}
+                onClick={() => optAvailable && setSelectedOption(option)}
+                disabled={!optAvailable}
+                className={`px-3 py-1.5 text-xs font-semibold rounded-full border transition-all ${
+                  selectedOption.value === option.value
+                    ? 'bg-rose-700 text-white border-rose-700'
+                    : 'bg-white text-rose-700 border-rose-300 hover:border-rose-500'
+                } ${!optAvailable ? 'cursor-not-allowed opacity-40 line-through' : ''}`}
+                title={!optAvailable ? 'Out of stock' : option.label}
+              >
+                {option.label}
+              </button>
+            );
+          })}
         </div>
 
         {/* Add Button */}
+        {/* FIX: Bug 1: Disable and mark Out of Stock if not available */}
         <button 
-          onClick={() => product.available && (isCake ? onQuickView(product) : onAddToCart(product, 1, '', selectedOption))}
-          disabled={!product.available}
+          onClick={() => isAvailable && (isCake ? onQuickView(product) : onAddToCart(product, 1, '', selectedOption))}
+          disabled={!isAvailable}
           className={`w-full py-3 font-bold uppercase tracking-wider rounded-full transition-all cursor-pointer ${
-            product.available 
+            isAvailable 
               ? 'bg-amber-400 hover:bg-amber-500 text-stone-900' 
               : 'bg-stone-300 text-stone-500 cursor-not-allowed'
           }`}
         >
-          {!product.available ? 'Not Available' : isCake ? 'Customize' : 'Add'}
+          {!isAvailable ? 'Out of Stock' : isCake ? 'Customize' : 'Add'}
         </button>
       </div>
     </div>

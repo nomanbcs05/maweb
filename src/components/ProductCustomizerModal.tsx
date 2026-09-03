@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { Product, QuantityOption } from '../types';
 import { X, Plus, Minus, ShoppingBag } from 'lucide-react';
+import { isProductAvailable, getVariantPrice } from '../utils/product';
 
 interface ProductCustomizerModalProps {
   product: Product | null;
@@ -19,17 +20,19 @@ export const ProductCustomizerModal: React.FC<ProductCustomizerModalProps> = ({
 
   if (!product) return null;
 
-  // Initialize selected option if available
+  // FIX BUG 1: Initialize with first available variant
   React.useEffect(() => {
     if (product.quantityOptions && product.quantityOptions.length > 0) {
-      setSelectedOption(product.quantityOptions[0]);
+      const firstAvail = product.quantityOptions.find(opt => isProductAvailable(product, opt)) || product.quantityOptions[0];
+      setSelectedOption(firstAvail);
     }
   }, [product]);
 
   const handleIncrement = () => setQuantity(q => q + 1);
   const handleDecrement = () => setQuantity(q => Math.max(1, q - 1));
 
-  const currentPrice = selectedOption?.price || product.price;
+  // FIX BUG 2: Use getVariantPrice helper to calculate dynamic cake price or variant price
+  const currentPrice = getVariantPrice(product, selectedOption);
 
   const handleAdd = () => {
     onAddToCart(product, quantity, notes, selectedOption);
@@ -81,19 +84,24 @@ export const ProductCustomizerModal: React.FC<ProductCustomizerModalProps> = ({
                   Size
                 </label>
                 <div className="flex flex-wrap gap-2">
-                  {product.quantityOptions.map((option) => (
-                    <button
-                      key={option.value}
-                      onClick={() => setSelectedOption(option)}
-                      className={`px-4 py-2 text-sm font-bold rounded-lg border-2 transition-all ${
-                        selectedOption?.value === option.value
-                          ? 'bg-rose-700 text-white border-rose-700'
-                          : 'bg-white text-stone-700 border-stone-300 hover:border-rose-300'
-                      }`}
-                    >
-                      {option.label}
-                    </button>
-                  ))}
+                  {product.quantityOptions.map((option) => {
+                    const optAvailable = isProductAvailable(product, option);
+                    return (
+                      <button
+                        key={option.value}
+                        onClick={() => optAvailable && setSelectedOption(option)}
+                        disabled={!optAvailable}
+                        className={`px-4 py-2 text-sm font-bold rounded-lg border-2 transition-all ${
+                          selectedOption?.value === option.value
+                            ? 'bg-rose-700 text-white border-rose-700'
+                            : 'bg-white text-stone-700 border-stone-300 hover:border-rose-300'
+                        } ${!optAvailable ? 'cursor-not-allowed opacity-40 line-through' : ''}`}
+                        title={!optAvailable ? 'Out of stock' : option.label}
+                      >
+                        {option.label}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             )}
@@ -149,13 +157,26 @@ export const ProductCustomizerModal: React.FC<ProductCustomizerModalProps> = ({
             </div>
 
             {/* Add to Cart button */}
-            <button 
-              onClick={handleAdd}
-              className="flex-1 px-5 py-3 bg-stone-900 dark:bg-amber-600 hover:bg-amber-600 dark:hover:bg-amber-500 text-white font-bold text-sm uppercase tracking-wider rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 shadow-md"
-            >
-              <ShoppingBag size={16} />
-              Add — Rs. {(currentPrice * quantity).toFixed(0)}
-            </button>
+            {/* FIX: Bug 1: Disable button if selected option is out of stock */}
+            {(() => {
+              const isAvailable = isProductAvailable(product, selectedOption);
+              return (
+                <button 
+                  onClick={() => isAvailable && handleAdd()}
+                  disabled={!isAvailable}
+                  className={`flex-1 px-5 py-3 font-bold text-sm uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 shadow-md ${
+                    isAvailable
+                      ? 'bg-stone-900 dark:bg-amber-600 hover:bg-amber-600 dark:hover:bg-amber-500 text-white cursor-pointer'
+                      : 'bg-stone-300 dark:bg-zinc-800 text-stone-500 cursor-not-allowed'
+                  }`}
+                >
+                  <ShoppingBag size={16} />
+                  {isAvailable 
+                    ? `Add — Rs. ${(currentPrice * quantity).toFixed(0)}` 
+                    : 'Out of Stock'}
+                </button>
+              );
+            })()}
           </div>
         </div>
       </div>

@@ -13,10 +13,32 @@ export interface CustomizationOption {
   choices?: { name: string; price: number }[];
 }
 
+// FIX: Bug 1 & Bug 2: Enhanced QuantityOption with variantId, stock, and frozen flags
 export interface QuantityOption {
+  id?: string;
   label: string;
   value: string;
   price: number;
+  stock?: number;
+  out_of_stock?: boolean;
+  isFrozen?: boolean;
+  allowSidebarOrder?: boolean;
+}
+
+// FIX BUG 1: Cart item structure with composite key `${productId}-${variantId}`
+export interface CartItem {
+  id: string; // `${productId}-${variantId}`
+  productId: string;
+  variantId: string;
+  variantName: string;
+  price: number;
+  qty: number;
+  image: string;
+  name: string;
+  product: Product;
+  quantity: number;
+  notes: string;
+  selectedOption?: QuantityOption;
 }
 
 export interface Product {
@@ -35,6 +57,12 @@ export interface Product {
   best_seller: boolean;
   new_arrival: boolean;
   available: boolean;
+  // FIX: Bug 1: Status and stock flags for global availability
+  status?: string; // 'active' | 'inactive'
+  stock?: number;
+  out_of_stock?: boolean;
+  isFrozen?: boolean;
+  allowSidebarOrder?: boolean;
   stock_quantity: number; // -1 for unlimited
   minimum_order: number;
   preparation_time?: string;

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronRight, Menu, ShoppingCart, X } from 'lucide-react';
 import type { Product } from '../types';
+import { isProductAvailable } from '../utils/product';
 
 interface HeroNavbarProps {
   categories: { id: string; name: string; slug: string }[];
@@ -173,8 +174,9 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
                   </button>
                   {expandedCategoryId === category.id && (
                     <div className="space-y-2 border-l border-[#071326]/10 pl-3">
+                      {/* FIX: Bug 1: Filter sidebar items with isProductAvailable (frozen items require allowSidebarOrder) */}
                       {products
-                        .filter((product) => product.category === category.name)
+                        .filter((product) => product.category === category.name && isProductAvailable(product, undefined, true))
                         .map((product) => (
                           <div
                             key={product.id}

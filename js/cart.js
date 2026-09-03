@@ -10,44 +10,91 @@ const TAX_RATE = 0.0;     // Configured tax rate (0%)
 let cart = JSON.parse(localStorage.getItem(CART_STORAGE_KEY) || '{}');
 let currentDiscount = 0;
 
+// FIX: Bug 2: Migration for legacy cart items without variantId
+(function migrateLegacyCart() {
+  let hasOld = false;
+  for (const key in cart) {
+    if (!cart[key].variantId) {
+      delete cart[key];
+      hasOld = true;
+    }
+  }
+  if (hasOld) {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+    if (typeof window.showToast === 'function') {
+      window.showToast('Please re-add items', true);
+    }
+  }
+})();
+
 function saveCart() {
   localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
 }
 
-function addToCart(productId, productDetails) {
-  if (!cart[productId]) {
-    cart[productId] = { ...productDetails, qty: 0, notes: '' };
+// FIX: Bug 1: Vanilla availability check
+function isProductAvailable(product, variant) {
+  if (!product) return false;
+  if (product.status && product.status !== 'active') return false;
+  if (product.available === false || product.out_of_stock === true) return false;
+  if (typeof product.stock === 'number' && product.stock <= 0) return false;
+  if (variant && variant.out_of_stock) return false;
+  return true;
+}
+
+// FIX: Bug 1 & Bug 2: Check availability and use composite key ${productId}-${variantId}
+function addToCart(productId, productDetails, variantId = '1lb', variantName = '1LB', price = null) {
+  if (!isProductAvailable(productDetails)) {
+    if (typeof window.showToast === 'function') {
+      window.showToast('This item is currently out of stock', true);
+    }
+    return;
   }
-  cart[productId].qty++;
+
+  const itemPrice = price !== null ? price : (productDetails.price || 0);
+  const compositeId = `${productId}-${variantId}`;
+
+  if (!cart[compositeId]) {
+    cart[compositeId] = {
+      id: compositeId,
+      productId: productId,
+      variantId: variantId,
+      variantName: variantName,
+      price: itemPrice,
+      qty: 0,
+      notes: '',
+      ...productDetails
+    };
+  }
+  cart[compositeId].qty++;
   saveCart();
   renderCart();
   
   if (typeof window.showToast === 'function') {
-    window.showToast(`${productDetails.name} added to cart`);
+    window.showToast(`${productDetails.name} (${variantName}) added to cart`);
   }
 }
 
-function updateCartQty(productId, delta) {
-  if (cart[productId]) {
-    cart[productId].qty += delta;
-    if (cart[productId].qty <= 0) {
-      delete cart[productId];
+function updateCartQty(key, delta) {
+  if (cart[key]) {
+    cart[key].qty += delta;
+    if (cart[key].qty <= 0) {
+      delete cart[key];
     }
     saveCart();
     renderCart();
   }
 }
 
-function updateItemNotes(productId, notes) {
-  if (cart[productId]) {
-    cart[productId].notes = notes;
+function updateItemNotes(key, notes) {
+  if (cart[key]) {
+    cart[key].notes = notes;
     saveCart();
   }
 }
 
-function removeFromCart(productId) {
-  if (cart[productId]) {
-    delete cart[productId];
+function removeFromCart(key) {
+  if (cart[key]) {
+    delete cart[key];
     saveCart();
     renderCart();
   }

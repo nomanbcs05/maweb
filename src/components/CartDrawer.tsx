@@ -1,26 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { X, Trash2, Plus, Minus, FileText, Gift } from 'lucide-react';
-import type { Product } from '../types';
+import type { CartItem } from '../types';
 import { API } from '../services/api';
 import { GST_RATE, DELIVERY_FEE } from '../config/pricing';
+import { getVariantPrice } from '../utils/product';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import type { QuantityOption } from '../types';
-
-export interface CartItem {
-  product: Product;
-  quantity: number;
-  notes: string;
-  selectedOption?: QuantityOption;
-}
+// FIX BUG 1: Re-export CartItem from central types
+export type { CartItem };
 
 interface CartDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   items: CartItem[];
-  onUpdateQty: (productId: string, delta: number, optionValue?: string) => void;
-  onUpdateNotes: (productId: string, notes: string, optionValue?: string) => void;
-  onRemove: (productId: string, optionValue?: string) => void;
+  // FIX BUG 1: Use composite id as key with backward-compatible optionValue
+  onUpdateQty: (id: string, delta: number, optionValue?: string) => void;
+  onUpdateNotes: (id: string, notes: string, optionValue?: string) => void;
+  onRemove: (id: string, optionValue?: string) => void;
   onProceedToCheckout: () => void;
 }
 
@@ -42,7 +38,12 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   const [couponStatus, setCouponStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [couponMsg, setCouponMsg] = useState('');
 
-  const subtotal = items.reduce((s, i) => s + (i.selectedOption?.price || i.product.price) * i.quantity, 0);
+  // FIX BUG 1 & FIX BUG 2: Subtotal uses cart item price (calculated via getVariantPrice) and variant qty
+  const subtotal = items.reduce((s, i) => {
+    const itemPrice = i.price ?? getVariantPrice(i.product, i.variantName || i.selectedOption);
+    const qty = i.qty ?? i.quantity;
+    return s + itemPrice * qty;
+  }, 0);
   const tax = subtotal * GST_RATE;
 
   let delivery = subtotal > 0 ? DELIVERY_FEE : 0;
@@ -158,17 +159,21 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 </div>
               ) : (
                 items.map((item, index) => {
-                  const itemPrice = item.selectedOption?.price || item.product.price;
-                  const itTotal = itemPrice * item.quantity;
+                  // FIX BUG 1 & FIX BUG 2: Use cart item price (calculated via getVariantPrice) and composite id
+                  const itemPrice = item.price ?? getVariantPrice(item.product, item.variantName || item.selectedOption);
+                  const itemQty = item.qty ?? item.quantity;
+                  const itemId = item.id || `${item.productId || item.product.id}-${item.variantId || item.selectedOption?.value || 'default'}`;
+                  const variantText = item.variantName || item.selectedOption?.label;
+
                   return (
                     <div 
-                      key={`${item.product.id}-${item.selectedOption?.value || 'default'}-${index}`}
+                      key={`${itemId}-${index}`}
                       className="flex gap-4 pb-6 border-b border-stone-100 dark:border-zinc-800/60 last:border-b-0 last:pb-0"
                     >
                       {/* Product Image */}
                       <img 
-                        src={item.product.image} 
-                        alt={item.product.name} 
+                        src={item.image || item.product.image} 
+                        alt={item.name || item.product.name} 
                         className="w-20 h-20 object-contain rounded-xl bg-stone-50 border border-stone-200/40 dark:border-zinc-800/50 flex-shrink-0"
                         loading="lazy"
                       />
@@ -180,17 +185,20 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                             <span className="text-[9px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-500">
                               {item.product.category}
                             </span>
-                            <h4 className="font-family-fraunces text-base font-bold text-stone-900 dark:text-white line-clamp-1">
-                              {item.product.name}
-                            </h4>
-                            {item.selectedOption && (
-                              <span className="text-[10px] text-stone-500">
-                                {item.selectedOption.label}
-                              </span>
-                            )}
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              {/* FIX BUG 1: In Cart Page, render name + variantName */}
+                              <h4 className="font-family-fraunces text-base font-bold text-stone-900 dark:text-white line-clamp-1">
+                                {item.name || item.product.name}
+                              </h4>
+                              {variantText && (
+                                <span className="text-[11px] font-bold text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-950/60 px-1.5 py-0.5 rounded">
+                                  {variantText}
+                                </span>
+                              )}
+                            </div>
                           </div>
                           <button 
-                            onClick={() => onRemove(item.product.id, item.selectedOption?.value)}
+                            onClick={() => onRemove(itemId, item.selectedOption?.value)}
                             className="p-1.5 rounded-lg text-stone-400 hover:text-rose-500 hover:bg-stone-50 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
                             aria-label="Remove item"
                           >
@@ -206,18 +214,18 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
                           <div className="flex items-center border border-stone-200 dark:border-zinc-800 rounded-lg bg-stone-50 dark:bg-zinc-900 p-0.5">
                             <button 
-                              onClick={() => onUpdateQty(item.product.id, -1, item.selectedOption?.value)}
-                              disabled={item.quantity <= 1}
+                              onClick={() => onUpdateQty(itemId, -1, item.selectedOption?.value)}
+                              disabled={itemQty <= 1}
                               className="w-6 h-6 rounded-md flex items-center justify-center text-stone-600 dark:text-stone-400 disabled:opacity-40 transition-colors cursor-pointer active:scale-95"
                               aria-label="Decrease quantity"
                             >
                               <Minus size={12} />
                             </button>
                             <span className="w-8 text-center text-xs font-bold text-stone-900 dark:text-white">
-                              {item.quantity}
+                              {itemQty}
                             </span>
                             <button 
-                              onClick={() => onUpdateQty(item.product.id, 1, item.selectedOption?.value)}
+                              onClick={() => onUpdateQty(itemId, 1, item.selectedOption?.value)}
                               className="w-6 h-6 rounded-md flex items-center justify-center text-stone-600 dark:text-stone-400 transition-colors cursor-pointer active:scale-95"
                               aria-label="Increase quantity"
                             >
@@ -233,14 +241,14 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                             type="text"
                             placeholder="Special instructions..."
                             value={item.notes}
-                            onChange={e => onUpdateNotes(item.product.id, e.target.value, item.selectedOption?.value)}
+                            onChange={e => onUpdateNotes(itemId, e.target.value, item.selectedOption?.value)}
                             className="w-full pl-7 pr-3 py-1.5 text-[11px] border border-stone-100 dark:border-zinc-850 bg-stone-50/50 dark:bg-zinc-900/50 text-stone-800 dark:text-stone-300 rounded-lg outline-none focus:border-amber-600/50 dark:focus:border-amber-500/50 transition-colors"
                           />
                         </div>
 
                         {/* Item total price */}
                         <div className="text-right text-xs text-stone-400 dark:text-stone-500">
-                          Total: <span className="font-bold text-stone-900 dark:text-white">Rs. {itTotal.toFixed(0)}</span>
+                          Total: <span className="font-bold text-stone-900 dark:text-white">Rs. {(itemPrice * itemQty).toFixed(0)}</span>
                         </div>
                       </div>
                     </div>

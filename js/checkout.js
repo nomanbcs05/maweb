@@ -166,10 +166,11 @@ function updateSummarySidebar() {
   const totals = window.Cart.calculateTotals();
   const cart = window.Cart.getCart();
   const container = document.getElementById('sumItems');
-  
+  if (!container) return;
   container.innerHTML = Object.keys(cart).map(id => {
+    const variantText = cart[id].variantName ? ` (${cart[id].variantName})` : '';
     return `<div class="sum-item">
-      <span>${cart[id].qty}x ${cart[id].name}</span>
+      <span>${cart[id].qty}x ${cart[id].name}${variantText}</span>
       <b>Rs. ${(cart[id].qty * cart[id].price).toFixed(0)}</b>
     </div>`;
   }).join('');

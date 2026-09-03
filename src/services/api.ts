@@ -1,17 +1,24 @@
 import { supabase } from './supabase';
 import type { Product, Category, Order } from '../types';
+import { isProductAvailable } from '../utils/product';
+import { branchesData } from '../config/branches';
+
+// FIX: Bug 1: Export isProductAvailable for convenience
+export { isProductAvailable };
 
 // Static product data defined separately
 const staticProducts: Product[] = [
   // Cakes
-  { id: 'cake1', name: 'Black Forest Cake', slug: 'black-forest-cake', category: 'Cakes', description: 'Classic black forest cake with cherries and chocolate layers.', price: 600, unit: 'Pound', quantityOptions: [
-    { label: '1LB', value: '1lb', price: 600 },
-    { label: '2LB', value: '2lb', price: 1100 }
-  ], image: '/images/products/cakes/black-forest-cake.png', gallery: [], featured: true, best_seller: true, new_arrival: false, available: true, stock_quantity: 10, minimum_order: 1, preparation_time: '1 hour', tags: ['Chocolate', 'Cherry'], ingredients: ['Flour', 'Sugar', 'Cocoa Powder', 'Butter', 'Eggs', 'Cream', 'Cherries'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
-  { id: 'cake2', name: 'Pineapple Ice Cake', slug: 'pineapple-ice-cake', category: 'Cakes', description: 'Refreshing pineapple ice cake with fresh pineapple.', price: 550, unit: 'Pound', quantityOptions: [
-    { label: '1LB', value: '1lb', price: 550 },
-    { label: '2LB', value: '2lb', price: 1000 }
-  ], image: '/images/products/cakes/pineapple-ice-cake.png', gallery: [], featured: false, best_seller: false, new_arrival: true, available: true, stock_quantity: 8, minimum_order: 1, preparation_time: '1 hour', tags: ['Pineapple', 'Ice Cake'], ingredients: ['Flour', 'Sugar', 'Butter', 'Pineapple', 'Cream', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  // FIX: Bug 2: Test product with 1LB and 2LB variants
+  { id: 'cake1', name: 'Black Forest Cake', slug: 'black-forest-cake', category: 'Cakes', description: 'Classic black forest cake with cherries and chocolate layers.', price: 600, unit: 'Pound', status: 'active', available: true, stock_quantity: 15, quantityOptions: [
+    { id: 'cake1-1lb', label: '1LB', value: '1lb', price: 600, stock: 10 },
+    { id: 'cake1-2lb', label: '2LB', value: '2lb', price: 1100, stock: 5 }
+  ], image: '/images/products/cakes/black-forest-cake.png', gallery: [], featured: true, best_seller: true, new_arrival: false, minimum_order: 1, preparation_time: '1 hour', tags: ['Chocolate', 'Cherry'], ingredients: ['Flour', 'Sugar', 'Cocoa Powder', 'Butter', 'Eggs', 'Cream', 'Cherries'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
+  // FIX: Bug 1: Test product with out_of_stock: true and stock: 0
+  { id: 'cake2', name: 'Pineapple Ice Cake', slug: 'pineapple-ice-cake', category: 'Cakes', description: 'Refreshing pineapple ice cake with fresh pineapple.', price: 550, unit: 'Pound', status: 'inactive', available: false, out_of_stock: true, stock_quantity: 0, stock: 0, quantityOptions: [
+    { id: 'cake2-1lb', label: '1LB', value: '1lb', price: 550, stock: 0, out_of_stock: true },
+    { id: 'cake2-2lb', label: '2LB', value: '2lb', price: 1000, stock: 0, out_of_stock: true }
+  ], image: '/images/products/cakes/pineapple-ice-cake.png', gallery: [], featured: false, best_seller: false, new_arrival: true, minimum_order: 1, preparation_time: '1 hour', tags: ['Pineapple', 'Ice Cake'], ingredients: ['Flour', 'Sugar', 'Butter', 'Pineapple', 'Cream', 'Eggs'], allergens: ['Gluten', 'Dairy', 'Eggs'] },
   { id: 'cake3', name: 'Dry Fruit Cake', slug: 'dry-fruit-cake', category: 'Cakes', description: 'Rich dry fruit cake with assorted nuts and fruits.', price: 600, unit: 'Pound', quantityOptions: [
     { label: '1LB', value: '1lb', price: 600 },
     { label: '2LB', value: '2lb', price: 1100 }
@@ -125,9 +132,13 @@ const staticProducts: Product[] = [
 ];
 
 export const API = {
+  // FIX: Bug 1: Product listing API filters out out-of-stock products
   async getProducts(): Promise<Product[]> {
-    // For now, always use static product data
-    console.log('📦 Using static product data (local images enabled)');
+    console.log('📦 Using static product data with availability filter');
+    return staticProducts.filter(p => isProductAvailable(p));
+  },
+
+  async getAllProductsRaw(): Promise<Product[]> {
     return staticProducts;
   },
 
@@ -226,6 +237,69 @@ export const API = {
         { id: 'branch-2', name: 'M.A Bakers 2 — Jam Sahib Road', address: 'Jam Sahib Road, Nawabshah' }
       ];
     }
+  },
+
+  // FIX: Bug 3: Area selector locations API with 1-hour cache and DB/fallback support
+  async getLocations(): Promise<{ id: string; name: string; branch_id?: string; isActive: boolean }[]> {
+    const CACHE_KEY = 'mab_locations_cache';
+    const CACHE_TIME_KEY = 'mab_locations_cache_time';
+    const ONE_HOUR = 60 * 60 * 1000; // 1 hour in ms
+
+    // 1. Check 1-hour cache in localStorage
+    try {
+      const cached = localStorage.getItem(CACHE_KEY);
+      const cacheTime = localStorage.getItem(CACHE_TIME_KEY);
+      if (cached && cacheTime && (Date.now() - Number(cacheTime) < ONE_HOUR)) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.warn('Locations cache read error:', e);
+    }
+
+    // 2. Query Database / Supabase if table exists
+    let fetchedLocations: { id: string; name: string; branch_id?: string; isActive: boolean }[] = [];
+    try {
+      const { data, error } = await supabase
+        .from('locations')
+        .select('*')
+        .eq('isActive', true);
+
+      if (!error && data && data.length > 0) {
+        fetchedLocations = data.map((item: any) => ({
+          id: item.id || item.name,
+          name: item.name || item.area,
+          branch_id: item.branch_id,
+          isActive: true
+        }));
+      }
+    } catch (e) {
+      console.warn('Locations table query bypassed, using branchesData fallback');
+    }
+
+    // 3. Fallback to active locations configured in branchesData
+    if (fetchedLocations.length === 0) {
+      fetchedLocations = branchesData.flatMap(b =>
+        b.locations.map(loc => ({
+          id: `${b.id}-${loc.toLowerCase().replace(/[^a-z0-9]/g, '-')}`,
+          name: loc,
+          branch_id: b.id,
+          isActive: true
+        }))
+      );
+    }
+
+    // 4. Cache in localStorage for 1 hour
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify(fetchedLocations));
+      localStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
+    } catch (e) {
+      console.warn('Locations cache write error:', e);
+    }
+
+    return fetchedLocations;
   },
 
   async saveOrder(orderData: any): Promise<Order> {
