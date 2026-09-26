@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Dashboard — M.A Bakers</title>
+<script>
+  // Redirect to full modern Admin Management Platform
+  if (!window.location.search.includes('legacy=1')) {
+    window.location.replace('/?admin=1');
+  }
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/admin.css">
 <!-- Chart.js for analytics -->

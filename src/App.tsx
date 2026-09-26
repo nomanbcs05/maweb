@@ -7,6 +7,7 @@ import { CheckoutModal } from './components/CheckoutModal';
 import { OrderConfirmationModal } from './components/OrderConfirmationModal';
 import { OrderTracking } from './components/OrderTracking';
 import { AdminPanel } from './components/AdminPanel';
+import { AdminLogin, useAdminAuth } from './components/admin/AdminLogin';
 import { ProductCustomizerModal } from './components/ProductCustomizerModal';
 import { OrderTypeLocationModal } from './components/OrderTypeLocationModal';
 import { HeroSlider } from './components/HeroSlider';
@@ -29,6 +30,27 @@ import {
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [route, setRoute] = useState<'store' | 'admin' | 'track'>('store');
+  const { isAuthenticated } = useAdminAuth();
+
+  useEffect(() => {
+    const handleUrlRoute = () => {
+      const search = window.location.search;
+      const hash = window.location.hash;
+      const path = window.location.pathname;
+      if (search.includes('admin') || hash === '#admin' || path === '/admin') {
+        setRoute('admin');
+      } else if (search.includes('track') || hash === '#track' || path === '/track') {
+        setRoute('track');
+      }
+    };
+    handleUrlRoute();
+    window.addEventListener('popstate', handleUrlRoute);
+    window.addEventListener('hashchange', handleUrlRoute);
+    return () => {
+      window.removeEventListener('popstate', handleUrlRoute);
+      window.removeEventListener('hashchange', handleUrlRoute);
+    };
+  }, []);
 
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<{ id: string; name: string; slug: string }[]>([]);
@@ -289,11 +311,38 @@ function App() {
   };
 
   if (route === 'admin') {
-    return <AdminPanel onBackToStore={() => { setRoute('store'); fetchData(); }} />;
+    if (!isAuthenticated) {
+      return (
+        <AdminLogin
+          onLogin={() => {}}
+          onBackToStore={() => {
+            setRoute('store');
+            window.history.pushState({}, '', window.location.pathname.replace(/\/admin.*|\/track.*/, '/') || '/');
+            fetchData();
+          }}
+        />
+      );
+    }
+    return (
+      <AdminPanel
+        onBackToStore={() => {
+          setRoute('store');
+          window.history.pushState({}, '', window.location.pathname.replace(/\/admin.*|\/track.*/, '/') || '/');
+          fetchData();
+        }}
+      />
+    );
   }
 
   if (route === 'track') {
-    return <OrderTracking onBackToStore={() => setRoute('store')} />;
+    return (
+      <OrderTracking
+        onBackToStore={() => {
+          setRoute('store');
+          window.history.pushState({}, '', window.location.pathname.replace(/\/admin.*|\/track.*/, '/') || '/');
+        }}
+      />
+    );
   }
 
   return (
@@ -1046,6 +1095,26 @@ function App() {
           <div className="pt-5 border-t border-white/10 text-center">
             <p className="text-gray-400 text-xs">
               © 2026 <span className="text-white font-semibold">M.A BAKERS</span>. All Rights Reserved. Powered by <span className="text-[#D4AF37] font-semibold">Genx Cloud</span>
+              <span className="text-gray-600"> • </span>
+              <button
+                onClick={() => {
+                  setRoute('admin');
+                  window.history.pushState({}, '', '#admin');
+                }}
+                className="text-gray-400 hover:text-[#D4AF37] transition-colors cursor-pointer text-xs"
+              >
+                Staff Portal
+              </button>
+              <span className="text-gray-600"> • </span>
+              <button
+                onClick={() => {
+                  setRoute('track');
+                  window.history.pushState({}, '', '#track');
+                }}
+                className="text-gray-400 hover:text-[#D4AF37] transition-colors cursor-pointer text-xs"
+              >
+                Track Order
+              </button>
             </p>
           </div>
         </div>
