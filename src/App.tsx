@@ -7,7 +7,7 @@ import { CheckoutModal } from './components/CheckoutModal';
 import { OrderConfirmationModal } from './components/OrderConfirmationModal';
 import { OrderTracking } from './components/OrderTracking';
 import { AdminPanel } from './components/AdminPanel';
-import { AdminLogin, useAdminAuth } from './components/admin/AdminLogin';
+import { AdminLogin } from './components/admin/AdminLogin';
 import { ProductCustomizerModal } from './components/ProductCustomizerModal';
 import { OrderTypeLocationModal } from './components/OrderTypeLocationModal';
 import { HeroSlider } from './components/HeroSlider';
@@ -30,7 +30,15 @@ import {
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [route, setRoute] = useState<'store' | 'admin' | 'track'>('store');
-  const { isAuthenticated } = useAdminAuth();
+  // Force re‑render when auth state changes (e.g., after login)
+  const [, setAuthTrigger] = useState(0);
+  const isAuthenticated = sessionStorage.getItem('mab_admin_session') === 'authenticated';
+  // Listen for storage changes (login/logout) from other tabs/windows
+  useEffect(() => {
+    const handler = () => setAuthTrigger(t => t + 1);
+    window.addEventListener('storage', handler);
+    return () => window.removeEventListener('storage', handler);
+  }, []);
 
   useEffect(() => {
     const handleUrlRoute = () => {
@@ -314,7 +322,7 @@ function App() {
     if (!isAuthenticated) {
       return (
         <AdminLogin
-          onLogin={() => {}}
+          onLogin={() => { setAuthTrigger(t => t + 1); }}
           onBackToStore={() => {
             setRoute('store');
             window.history.pushState({}, '', window.location.pathname.replace(/\/admin.*|\/track.*/, '/') || '/');
