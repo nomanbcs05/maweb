@@ -120,12 +120,53 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
   const isAvailable = isProductAvailable(product, selectedOptionObj);
 
+  // Customize button - saves selectedVariant to URL params
+  const handleCustomize = () => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      params.set('productId', product.id);
+      params.set('id', product.id);
+      params.set('variant', selectedOption);
+      params.set('price', displayPrice.toString());
+      window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
+    }
+    onQuickView(product);
+  };
+
+  // Add button - sends selectedVariant and computed price
+  const handleAdd = () => {
+    if (!isAvailable) return;
+    if (isCake) {
+      handleCustomize();
+      return;
+    }
+    const productWithVariant = {
+      ...product,
+      selectedVariant: selectedOption,
+      price: displayPrice
+    };
+    onAddToCart(productWithVariant, 1, '', selectedOptionObj, displayPrice);
+  };
+
+  const handleSelectOption = (opt: string) => {
+    if (!isAvailable) return;
+    setSelectedOption(opt);
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('productId') === product.id || params.get('id') === product.id) {
+        params.set('variant', opt);
+        params.set('price', computeOptionPrice(product, opt).toString());
+        window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
+      }
+    }
+  };
+
   return (
     <div className="group bg-white rounded-none overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full border-0 relative">
       
       {/* Product Image Panel */}
       <div 
-        onClick={() => onQuickView(product)}
+        onClick={isCake ? handleCustomize : () => onQuickView(product)}
         className="relative aspect-[3/4] overflow-hidden bg-white cursor-pointer"
         title="Click to view details & customize"
       >
@@ -145,7 +186,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       {/* Info Body */}
       <div className="p-4 flex flex-col flex-1 text-center">
         <h3 
-          onClick={() => onQuickView(product)}
+          onClick={isCake ? handleCustomize : () => onQuickView(product)}
           className="text-lg font-semibold text-stone-800 mb-2 leading-tight cursor-pointer hover:text-rose-700 transition-colors"
           title="Click to customize"
         >
@@ -167,7 +208,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <button
               key={opt}
               type="button"
-              onClick={() => isAvailable && setSelectedOption(opt)}
+              onClick={() => handleSelectOption(opt)}
               disabled={!isAvailable}
               className={`px-3 py-1.5 text-xs font-semibold rounded-full border transition-all ${
                 selectedOption === opt
@@ -182,7 +223,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Add Button */}
         <button 
-          onClick={() => isAvailable && (isCake ? onQuickView(product) : onAddToCart(product, 1, '', selectedOptionObj, displayPrice))}
+          onClick={isCake ? handleCustomize : handleAdd}
           disabled={!isAvailable}
           className={`w-full py-3 font-bold uppercase tracking-wider rounded-full transition-all cursor-pointer ${
             isAvailable 
