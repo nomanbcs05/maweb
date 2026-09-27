@@ -442,11 +442,9 @@ function App() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 {featuredProducts.slice(0, 4).map(p => (
                   <ProductCard key={p.id} product={p}
-                    onAddToCart={(prod, qty, notes) => {
-                      if (prod.category === 'Cakes') setCustomizingProduct(prod);
-                      else handleAddToCart(prod, qty, notes || '');
+                    onAddToCart={(prod, qty, notes, option, price) => {
+                      handleAddToCart(prod, qty, notes || '', option, price);
                     }}
-                    onQuickView={setCustomizingProduct}
                   />
                 ))}
               </div>
@@ -624,11 +622,9 @@ function App() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                           {categoryProducts.map(p => (
                             <ProductCard key={p.id} product={p}
-                              onAddToCart={(prod, qty, notes) => {
-                                if (prod.category === 'Cakes') setCustomizingProduct(prod);
-                                else handleAddToCart(prod, qty, notes || '');
+                              onAddToCart={(prod, qty, notes, option, price) => {
+                                handleAddToCart(prod, qty, notes || '', option, price);
                               }}
-                              onQuickView={setCustomizingProduct}
                             />
                           ))}
                         </div>
@@ -720,9 +716,7 @@ function App() {
               return (
                 <div
                   key={product.id}
-                  onClick={() => setCustomizingProduct(product)}
-                  className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 p-4 rounded-2xl border border-[#071326]/10 bg-white transition-all hover:bg-[#f4ead6]/30 hover:shadow-md cursor-pointer"
-                  title="Click to customize details"
+                  className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 p-4 rounded-2xl border border-[#071326]/10 bg-white transition-all hover:bg-[#f4ead6]/30 hover:shadow-md"
                 >
                   <img
                     src={product.image}
@@ -746,11 +740,7 @@ function App() {
                     onClick={(e) => {
                       e.stopPropagation();
                       if (!isAvail) return;
-                      if (product.category === 'Cakes' || (product.quantityOptions && product.quantityOptions.length > 1) || isKgCategory(product.category, product.unit)) {
-                        setCustomizingProduct(product);
-                      } else {
-                        handleAddToCart(product, 1, '', undefined, product.price);
-                      }
+                      handleAddToCart(product, 1, '', undefined, product.price);
                     }}
                     className={`w-full sm:w-auto px-5 py-2.5 rounded-lg font-semibold text-xs sm:text-sm transition-colors shrink-0 ${
                       isAvail
@@ -758,7 +748,7 @@ function App() {
                         : 'bg-stone-300 text-stone-500 cursor-not-allowed opacity-60'
                     }`}
                   >
-                    {!isAvail ? 'Out of Stock' : (product.category === 'Cakes' || (product.quantityOptions && product.quantityOptions.length > 1)) ? 'Customize' : 'Add to Cart'}
+                    {!isAvail ? 'Out of Stock' : 'Add'}
                   </button>
                 </div>
               );
